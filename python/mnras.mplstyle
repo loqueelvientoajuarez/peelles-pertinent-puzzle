@@ -1,0 +1,40 @@
+# MNRAS column width is 240 pt.
+
+# 240 x 150 pt (~ golden ratio)
+figure.figsize : 3.32088, 2.07555 
+
+# positions of axes
+figure.subplot.left    : 0.15000 # 36 pt
+figure.subplot.right   : 0.97917 #  5 pt   
+figure.subplot.wspace  : 0.15000 # 30 pt   
+figure.subplot.bottom  : 0.20000 # 30 pt  
+figure.subplot.top     : 0.96667 #  5 pt   
+figure.subplot.hspace  : 0.20000 # 30 pt
+
+# fonts
+font.family        : Times New Roman 
+font.serif         : Times New Roman
+font.sans-serif    : Helvetica, Avant Garde
+font.cursive       : Zapf Chancery
+font.monospace     : Courier New
+text.usetex        : true
+
+# fontsizes
+axes.titlesize : 10
+axes.labelsize : 10
+legend.title_fontsize : 8
+legend.fontsize : 8
+
+# ticks
+xtick.top : True
+xtick.bottom : True
+xtick.labelsize : 8
+xtick.direction: in
+ytick.left : True
+ytick.right: True
+ytick.labelsize : 8
+ytick.direction : in
+
+# B&W lines by default
+axes.prop_cycle    : cycler('linestyle', ['-','--','-.',':'])
+

@@ -1,0 +1,40 @@
+# MNRAS text width is 504 pt.
+
+# 504 x 312 pt (~ golden ratio)
+figure.figsize : 6.97389, 4.31714
+
+# positions of axes
+figure.subplot.left    : 0.07143 # 36 pt
+figure.subplot.right   : 0.99008 #  5 pt   
+figure.subplot.wspace  : 0.07143 # 30 pt   
+figure.subplot.bottom  : 0.09615 # 27 pt  
+figure.subplot.top     : 0.98397 #  5 pt   
+figure.subplot.hspace  : 0.09615 # 27 pt
+
+# fonts
+font.family        : Times New Roman 
+font.serif         : Times New Roman
+font.sans-serif    : Helvetica, Avant Garde
+font.cursive       : Zapf Chancery
+font.monospace     : Courier New
+text.usetex        : true
+
+# fontsizes
+axes.titlesize : 10
+axes.labelsize : 10
+legend.title_fontsize : 8
+legend.fontsize : 8
+
+# ticks
+xtick.top : True
+xtick.bottom : True
+xtick.labelsize : 8
+xtick.direction: in
+ytick.left : True
+ytick.right: True
+ytick.labelsize : 8
+ytick.direction : in
+
+# B&W lines by default
+axes.prop_cycle    : cycler('linestyle', ['-','--','-.',':'])
+

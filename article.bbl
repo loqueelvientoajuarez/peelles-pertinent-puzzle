@@ -1,0 +1,52 @@
+\begin{thebibliography}{}
+\makeatletter
+\relax
+\def\mn@urlcharsother{\let\do\@makeother \do\$\do\&\do\#\do\^\do\_\do\%\do\~}
+\def\mn@doi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mn@doi@}
+  {\mn@doi@[]}}
+\def\mn@doi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href
+  {http://dx.doi.org/#2} {doi:#2}\else \href {http://dx.doi.org/#2} {#1}\fi
+  \endgroup}
+\def\mn@eprint#1#2{\mn@eprint@#1:#2::\@nil}
+\def\mn@eprint@arXiv#1{\href {http://arxiv.org/abs/#1} {{\tt arXiv:#1}}}
+\def\mn@eprint@dblp#1{\href {http://dblp.uni-trier.de/rec/bibtex/#1.xml}
+  {dblp:#1}}
+\def\mn@eprint@#1:#2:#3:#4\@nil{\def\@tempa {#1}\def\@tempb {#2}\def\@tempc
+  {#3}\ifx \@tempc \@empty \let \@tempc \@tempb \let \@tempb \@tempa \fi \ifx
+  \@tempb \@empty \def\@tempb {arXiv}\fi \@ifundefined
+  {mn@eprint@\@tempb}{\@tempb:\@tempc}{\expandafter \expandafter \csname
+  mn@eprint@\@tempb\endcsname \expandafter{\@tempc}}}
+
+\bibitem[\protect\citeauthoryear{{Burr}, {Kawano}, {Talou}, {Pan}  \&
+  {Hengartner}}{{Burr} et~al.}{2011}]{BUR11}
+{Burr} T.,  {Kawano} T.,  {Talou} P.,  {Pan} F.,   {Hengartner} N.,  2011,
+  Algorithms, 4, 28
+
+\bibitem[\protect\citeauthoryear{{D'Agostini}}{{D'Agostini}}{1994}]{DAG94}
+{D'Agostini} G.,  1994, Nuclear Instruments and Methods in Physics Research A,
+  346, 306
+
+\bibitem[\protect\citeauthoryear{{Neudecker}, {Fr{\"u}hwirth}  \&
+  {Leeb}}{{Neudecker} et~al.}{2012}]{NEU12}
+{Neudecker} D.,  {Fr{\"u}hwirth} R.,   {Leeb} H.,  2012, Nuclear Science and
+  Engineering, 170, 54
+
+\bibitem[\protect\citeauthoryear{{Neudecker}, {Capote}  \& {Leeb}}{{Neudecker}
+  et~al.}{2013}]{NEU13}
+{Neudecker} D.,  {Capote} R.,   {Leeb} H.,  2013, Nuclear Instruments and
+  Methods in Physics Research A, 723, 163
+
+\bibitem[\protect\citeauthoryear{{Neudecker}, {Fr{\"u}hwirth}, {Kawano}  \&
+  {Leeb}}{{Neudecker} et~al.}{2014}]{NEU14}
+{Neudecker} D.,  {Fr{\"u}hwirth} R.,  {Kawano} T.,   {Leeb} H.,  2014, Nuclear
+  Data Sheets, 118, 364
+
+\bibitem[\protect\citeauthoryear{{Nisius}}{{Nisius}}{2014}]{NIS14}
+{Nisius} R.,  2014, European Physical Journal C, 74, 3004
+
+\bibitem[\protect\citeauthoryear{{Peelle}}{{Peelle}}{1987}]{PEE87}
+{Peelle} R.~W.,  1987, Informal memorandum, Peelle’s Pertinent Puzzle.
+Oak Ridge National Laboratory
+
+\makeatother
+\end{thebibliography}
