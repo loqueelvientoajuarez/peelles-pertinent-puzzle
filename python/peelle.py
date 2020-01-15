@@ -138,5 +138,5 @@ def plot_figure9(tau=2, nu=0.5, sigma_sys=0.05, sigma_sta=0.006,
     if save:
         fig.savefig('../pdf/original-peelle.pdf')
 
-# plot_figure2()
-plot_figure9(save=True)
+plot_figure2()
+#plot_figure9(save=True)
