@@ -78,38 +78,65 @@ def plot_figure2():
     fig.show()
     fig.savefig('../pdf/uncorrelated-peelle.pdf')
 
-def plot_figure9(tau=1.25, V=0.8, errsys=0.05, errsta=0.005, nsigma=2.2):
+def plot_figure9(tau=2, nu=0.5, sigma_sys=0.05, sigma_sta=0.006, 
+        dnu=0.01, save=False):
     plt.style.use('mnras')
     fig = plt.figure(9)
-    fig.subplots_adjust(bottom=0.01)
     fig.clf()
-    dnu = round(nsigma/np.sqrt(2) * errsta / tau, 3)
-    dV = tau * dnu
-    nu = V / tau
-    nu1 = nu - dnu 
-    nu2 = nu + dnu
-    V1 = tau * nu1
-    V2 = tau * nu2
-    print((V2-V1)/errsta/1.414)
-    print('{:.4f} ± {:.4f}'.format(tau, tau*errsys))
-    print('{:.4f} ± {:.4f} -- {:.4f} ± {:.4f}'.format(nu1, errsta/tau, nu2, errsta/tau))
-    print('{:.4f} ± {:.4f} (± {:.4f}) -- {:.4f} ± {:.4f} (± {:.4f})'.format(V1, errsta, V1 * errsys, V2, errsta, V2 * errsys))
-    V = (V1 + V2) / 2 / (1 + (nsigma*errsys) ** 2)
-    eV = errsta / np.sqrt(2)
-    print(nsigma, errsys, V)
-    ax = fig.add_subplot(111)
-    ax.errorbar([0.4, 1.6], [V1, V2], yerr=[errsta, errsta], fmt='ko')    
-    ax.text(0.4, V1 + 1.1*errsta, '${\\scriptstyle V}_1$', va='bottom', ha='center')
-    ax.text(1.6, V2 - 1.1*errsta, '${\\scriptstyle V}_2$', va='top', ha='center')
-    ax.fill_between([0.3, 1.7], [V-eV, V-eV], [V+eV, V+eV], color=(.6,.6,.6)) 
-    ax.plot([0.3, 1.7], [V, V], 'k--')
-    ax.text(1.75, V, '${\\scriptstyle V}$', va='center', ha='left')
-    ax.set_xticks([])
-    ax.set_yticks([0.79, .8, .81])
-    ax.set_ylabel('visibility amplitude')
-    ax.set_xlim(0.1, 1.9)
+    fig.subplots_adjust(bottom=0.01,hspace=0)
+    ax1, ax2 = fig.subplots(2, 1, sharex=True)
+    dtau_sys = tau * sigma_sys
+    dnu_sta = sigma_sta * nu
+    dnu = dnu * nu
+    nu1, nu2 = nu - dnu, nu + dnu
+    dV_sta = tau * dnu_sta
+    V1, V2 = tau * nu1, tau * nu2
+    dV1_sys, dV2_sys = V1 * sigma_sys, V2 * sigma_sys
+    nsigma = abs(V2 - V1) / (np.sqrt(2) * dV_sta)
+    mu = (V1 + V2) / 2 / (1 + (sigma_sys * nsigma) ** 2)
+    dmu_sta = dV_sta / np.sqrt(2) 
+    dmu_sys = mu * sigma_sys
+    print('tau = {:.4f} ± {:.4f}'.format(tau, dtau_sys))
+    print('nu =  {:.4f} ± {:.4f} -- {:.4f} ± {:.4f}'.format(nu1, dnu_sta, nu2, dnu_sta))
+    print('V =   {:.4f} ± {:.4f} (± {:.4f}) -- {:.4f} ± {:.4f} (± {:.4f})'.format(V1, dV_sta, dV1_sys, V2, dV_sta, dV2_sys))
+    print('mu =  {:.4f} ± {:.4f} ± {:.4f}'.format(mu, dmu_sta, dmu_sys))
+    print('nsigma = {:.1f}'.format(nsigma))
+    gray = (.7,.7,.7)
+    lblue = gray
+    # raw visibilities
+    ax2.errorbar([0.4, 1.6], [nu1, nu2], yerr=[dnu_sta, dnu_sta], fmt='k.')
+    ax2.text(0.4, nu1 - 2*dnu_sta, '$\\nu_1$', 
+            va='top', ha='center')
+    ax2.text(1.6, nu2 + 2*dnu_sta, '$\\nu_2$', 
+            va='bottom', ha='center')
+    # transfer function
+    t = 1/tau
+    t1, t2 = t/(1+sigma_sys), t/(1-sigma_sys)
+    ax2.fill_between([0.3, 1.7], [t1, t1], [t2, t2], color=lblue)
+    ax2.plot([0.3, 1.7], [t, t], 'k-')
+    ax2.text(1.75, 1/tau, '$1/\\tau$', va='center', ha='left')
+    ax2.set_xticks([])
+    # ax.set_yticks([0.79, .8, .81])
+    # ax.set_ylabel('visibility amplitude')
+    # reduced visibilities 
+    ax1.errorbar([0.4, 1.6], [V1, V2], yerr=[dV_sta, dV_sta], fmt='k.')    
+    ax1.text(0.4, V1 + 1.5*dV_sta, '${\\scriptstyle V}_1$', 
+            va='bottom', ha='center')
+    ax1.text(1.6, V2 + 1.5*dV_sta, '${\\scriptstyle V}_2$', 
+            va='bottom', ha='center')
+    mu1, mu2 = mu - dmu_sta, mu + dmu_sta
+    ax1.fill_between([0.3, 1.7], [mu1, mu1], [mu2, mu2], color=gray) 
+    ax1.plot([0.3, 1.7], [mu, mu], 'k--')
+    ax1.text(1.75, mu, '${\\scriptstyle V}$', va='center', ha='left')
+    ax1.set_xlim(0.2, 1.95)
+    ax1.set_ylim(0.97, 1.03)
+    ax1.set_yticks([0.98, 1.00, 1.02])
+    ax2.set_ylim(0.47, 0.53)
+    ax1.set_ylabel('reduced visib.')
+    ax2.set_ylabel('raw visibility')
     fig.show()
-    fig.savefig('../pdf/original-peelle.pdf')
+    if save:
+        fig.savefig('../pdf/original-peelle.pdf')
 
 # plot_figure2()
-plot_figure9()
+plot_figure9(save=True)

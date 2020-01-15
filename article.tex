@@ -100,26 +100,31 @@ They are normalised with the same quantity (\cot), so they are correlated, hence
      \reldev^2\data_1\data_2              & \absdev^2\cot^2 + \reldev^2\data_2^2
             \end{pmatrix},
 \end{equation}
-when the second-order error term ($\absdev\reldev$) is ignored.  Then, the least squares estimate for $\data$ 
+when the second-order error term ($\absdev\reldev$) is ignored.  Using the matrix inverse $\vcov^{-1}$, the least squares estimate is 
 \begin{equation}
-    {\data} = \frac{\data_1 + \data_2}{2} 
-            \left(1 + \reldev^2\frac{(\data_1-\data_2)^2}{2\tau^2\absdev^2}\right)^{-1}
+\begin{split}
+    {\data} &= \frac{  (\vcov^{-1}_{11} + \vcov^{-1}_{12}) \data_1
+                      +(\vcov^{-1}_{22} + \vcov^{-1}_{12}) \data_2 }
+                    {  \vcov^{-1}_{11} + \vcov^{-1}_{22} + 2\vcov^{-1}_{12}},\\
+            &= \frac{\data_1 + \data_2}{2} 
+            \left(1 + \reldev^2\frac{(\data_1-\data_2)^2}{2\tau^2\absdev^2}\right)^{-1}.
+\end{split}
 \end{equation}
-systematically falls below the average.  If measurements differ significantly, it can even fall below the lowest value.  Figure~\ref{fig:peelle} gives such an example with 
+It systematically falls below the average of the two values $\data_1$ and $\data_2$.  If measurements differ significantly, it can even fall below the lowest value.  Figure~\ref{fig:peelle} gives such an example with a instrumental visibility of 50\% and two measurements on an unresolved target: 
 \begin{align*}
-    \cot   &= 1.250 \pm 0.063\ (5\%),\\
-    \raw_1 &= 0.634 \pm 0.004\ (0.6\%),\\
-    \raw_2 &= 0.646 \pm 0.004\ (0.6\%),
-\intertext{which yields two points 2.1 standard deviations appart}
-    \data_1 &= \system{0.793}{0.005}{0.040},\\
-    \data_2 &= \system{0.808}{0.005}{0.040}
+    \cot   &= 2.000 \pm 0.100\ (5\%),\\
+    \raw_1 &= 0.495 \pm 0.003\ (\approx 0.6\%),\\
+    \raw_2 &= 0.505 \pm 0.003\ (\approx 0.6\%),
+\intertext{which yields two points 2.4 standard deviations appart}
+    \data_1 &= \system{0.990}{0.006}{0.050},\\
+    \data_2 &= \system{1.010}{0.006}{0.050}
 \intertext{and the estimate}
-    \data &= \system{0.791}{0.003}{0.040}
+    \data &= \system{0.986}{0.004}{0.049}
 \end{align*}
 falls outside the data range.
-\begin{figure}
+\begin{figure}[t]
 \includegraphics[width=\linewidth]{pdf/original-peelle.pdf}
-\caption{Original Peelle problem rewritten in the context of interferometry.  Two correlated visibility measurements $\data_1$ and $\data_2$ (points with error bars) yield an estimate $\data$ (dashed line, uncertainty in grey) outside of the data range. Systematic uncertainty from calibration is 5\% and measurement noise $\approx 0.6\%$.}
+\caption{Original Peelle problem rewritten in the context of interferometry.  \emph{Bottom:} Two raw visibility amplitudes $\nu_1$ and $\nu_2$ (points with statistic error bars of $\approx 0.6\%$) are calibrated by the transfer function $1/\tau$ (solid line with systematic error zone of 5\%). \emph{Top:} the two calibrated visibility measurements $\data_1$ and $\data_2$ (points with statistic error bars of $\approx 0.6\%$) are strongly correlated. The least-squares estimate for the visibility $\data$ (dashed line, with statistic uncertainty error zone displayed) falls outside of the data range.}
 \label{fig:peelle}
 \end{figure}
 
@@ -142,7 +147,7 @@ $\delta$             & Kronecker delta\\
 \hline
 $\vdata$             & data\\ 
 $\verror$            & error ($= \vdata - \vdatamean$)\\
-$\sigma^2$           & variance ($= \expect{\error^2}$)\\
+$\dev^2$             & variance ($= \expect{\error^2}$)\\
 $\vcov$              & covariance matrix ($= \expect{\verror\outer\verror}$)\\
 $\corr$              & correlation coefficient\\
 $\vsens$, $\msens$   & sensitivity vector or matrix\\
