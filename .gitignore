@@ -1,6 +1,17 @@
+# TeX
+*.bak
+*.blg
+*.bbl
+*.aux
+*.log
+*.dvi
+# python
+*.pyc
+*.pickle
+# other
+*~
 *.bak
 *.swo
 *.swp
-*~
-*.pickle
-biblio
+# local files
+biblio/**
