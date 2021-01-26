@@ -5,6 +5,8 @@
 \usepackage{natbib}
 \bibliographystyle{mnras}
 
+\def\eqref#1{Eq.~(\ref{eq:#1})}
+
 \def\vec#1{\ensuremath{\boldsymbol{#1}}}
 \def\tr#1{\ensuremath{{#1}^\text{\textsc{t}}}}
 \def\expect#1{\ensuremath{ {<#1>} }}
@@ -92,7 +94,7 @@ In this introduction, we rewrite and adapt the original example in the context o
 \label{eq:data12}
 \end{subequations}
 
-They are normalised with the same quantity (\cot), so they are correlated, hence the systematic uncertainty term between parentheses in Eq.~\ref{eq:data12}. Error propagation gives the covariance matrix
+They are normalised with the same quantity (\cot), so they are correlated, hence the systematic uncertainty term between parentheses in \eqref{data12}. Error propagation gives the covariance matrix
 
 \begin{equation} 
    \vcov = \begin{pmatrix} 
@@ -105,7 +107,9 @@ when the second-order error term ($\absdev\reldev$) is ignored.  Using the matri
 \begin{split}
     {\data} &= \frac{  (\vcov^{-1}_{11} + \vcov^{-1}_{12}) \data_1
                       +(\vcov^{-1}_{22} + \vcov^{-1}_{12}) \data_2 }
-                    {  \vcov^{-1}_{11} + \vcov^{-1}_{22} + 2\vcov^{-1}_{12}},\\
+                    {   (\vcov^{-1}_{11} + \vcov^{-1}_{12}) \hphantom{\data_1}
+                      + (\vcov^{-1}_{22} + \vcov^{-1}_{12}) \hphantom{\data_2} 
+                    },\\
             &= \frac{\data_1 + \data_2}{2} 
             \left(1 + \reldev^2\frac{(\data_1-\data_2)^2}{2\tau^2\absdev^2}\right)^{-1}.
 \end{split}
@@ -202,7 +206,7 @@ The least squares estimate for $\datamean$ is given by
                   \frac { \tr\vsens{\ppp\vcov}^{-1}\vdata }
                         { \tr\vsens{\ppp\vcov}^{-1}\vsens }
 \end{equation}
-where $\vsens = \tr{(1, \cdots, 1)}$ is the trivial sensitivity vector.  The covariance matrix is the sum of an invertible diagonal matrix and one of rank one (see Eq.~\ref{eq:cov}), so that the inverse is obtained using the Woodbury matrix identity: 
+where $\vsens = \tr{(1, \cdots, 1)}$ is the trivial sensitivity vector.  The covariance matrix is the sum of an invertible diagonal matrix and one of rank one (see \eqref{cov}), so that the inverse is obtained using the Woodbury matrix identity: 
 \begin{align}
     \{ {\ppp\vcov}^{-1} \}_{ij} &= \frac{\delta_{ij}}{\dev_i^2}
          - \frac{\corr\reldev^2\data_i\data_j}
@@ -254,7 +258,7 @@ is biased.  If the data are not correlated ($\corr = 0$), the bias is small
 Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of
 the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to
 100). 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{pdf/uncorrelated-peelle.pdf}
 \caption{Fit $\datappp$  to unresolved visibilities ($\data = 1$), as a function of the relative uncertainty on the calibration $\reldev$ and the number of measurements $n$. $2/n\times10^5$ simulations were made and averaged, assuming that $\abserror$ and $\relerror$ follow normal distributions. \textit{Top:} fully correlated normalisation like in original Peelle's puzzle ($\absdev=0.02$ and $\corr = 1$). \textit{Bottom:} normalisation error without correlation ($\absdev=0.02$ and $\corr = 0$).}
@@ -284,14 +288,14 @@ We investigate four ways to determine the covariance matrix
 
 Figure~\ref{fig:fitexample} shows the example of a quadratic fit to partially correlated data with the four methods above.  As expected, the use of data $\vdata$ in the correlation matrix (method 2) leads to grossly underestimated data values, in the very same way as in the classical Peelle case (constant model).  Both method 3 and 4 yield reasonable estimates.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{pdf/fit-example.pdf}
 \caption{Example of a fit of correlated data from a four telescope interferometer with medium resolution: 6 groups of 100 data points (light gray points with the measurement error bar) with 2\% uncorrelated measurement errors and 3\% correlated normalisation error follow model $1-u^2$ (thick gray line). Least-squares model fitting of $a-bu^2$ is performed using four prescriptions for the covariance matrix.}
 \label{fig:fitexample}
 \end{figure}
 
-\begin{figure*}
+\begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{pdf/fit-quality.pdf}
 \caption{Distribution of the fitted parameters and fit properties for the four covariance matrix prescriptions. $5\times10^4$ simulations of 6 groups of 100 correlated data points $\data$ ($\absdev = 2\%$, $\reldev = 3\%$, $\corr = 1$, normal distributions) following model $\mod = 1-u^2$ are performed and fitted with $a - bu^2$ using least-squares minimisation. These groups of points are typical of a single snapshot obtained with a four-telescopes interferometer with medium spectral resolution. Reported quantities include median and 1-$\sigma$ interval of their distribution and, within brackets, the median uncertainty reported by the least squares fit: \emph{leftmost column:} distribution of the least squares; \emph{middle left:} constant coefficient $a$; \emph{middle right:} quadadratic coefficient $b$; \emph{rightmost column:} mean difference between model and data. The covariance matrix prescriptions are: \emph{top row:} correlations are ignored; \emph{second row:} a na\"\i{}ve covariance matrix uses the data values; \emph{third row:} covariance matrix uses modelled values from fit without correlations; \emph{bottom row:} covariance matrix and model are recursively computed, with the covariance matrix of the next recursion using the modelled value of the last step.}

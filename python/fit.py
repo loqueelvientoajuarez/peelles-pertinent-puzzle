@@ -252,5 +252,5 @@ def test_covmodels(model=quadratic, nsim=100, sigma_sys=0.03, sigma_sta=0.02,
         fig.savefig('../pdf/fit-quality.pdf')
     return fig
 
-test_model(save=True)
-# test_covmodels(nsim=50_000, save=True)
+# test_model(save=True)
+test_covmodels(nsim=50_000, save=True)
