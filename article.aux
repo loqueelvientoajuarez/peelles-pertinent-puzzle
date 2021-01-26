@@ -2,21 +2,23 @@
 \bibstyle{mnras}
 \citation{PER03}
 \citation{PEE87}
-\citation{PEE87,DAG94,BUR11,NEU12,NEU13,NEU14,NIS14}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Normalisation by a transfer function}{1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Reframing Peelle's Pertinent Puzzle}{1}\protected@file@percent }
 \newlabel{eq:data12}{{1}{1}}
+\citation{PEE87,DAG94,BUR11,NEU12,NEU13,NEU14,NIS14}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Original Peelle problem rewritten in the context of interferometry. \emph  {Bottom:} Two raw visibility amplitudes $\nu _1$ and $\nu _2$ (points with statistic error bars of $\approx 0.6\%$) are calibrated by the transfer function $1/\tau $ (solid line with systematic error zone of 5\%). \emph  {Top:} the two calibrated visibility measurements $\ensuremath  {{\scriptstyle V}}_1$ and $\ensuremath  {{\scriptstyle V}}_2$ (points with statistic error bars of $\approx 0.6\%$) are strongly correlated. The least-squares estimate for the visibility $\ensuremath  {{\scriptstyle V}}$ (dashed line, with statistic uncertainty error zone displayed) falls outside of the data range.}}{2}\protected@file@percent }
 \newlabel{fig:peelle}{{1}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Single value fit}{2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Single value fit}{2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Symbols used in this paper. Lower case bold font is used for vectors and upper case bold font for matrices.}}{2}\protected@file@percent }
 \newlabel{eq:cov}{{11}{3}}
 \newlabel{eq:mu}{{15}{3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Fit $\ensuremath  {\mu }^\star $ to unresolved visibilities ($\ensuremath  {{\scriptstyle V}}= 1$), as a function of the relative uncertainty on the calibration $\ensuremath  {\ensuremath  {\sigma }_\tau }$ and the number of measurements $n$. $2/n\times 10^5$ simulations were made and averaged, assuming that $\ensuremath  {\ensuremath  {\eta }_\nu }$ and $\ensuremath  {\ensuremath  {\eta }_\tau }$ follow normal distributions. \textit  {Top:} fully correlated normalisation like in original Peelle's puzzle ($\ensuremath  {\ensuremath  {\sigma }_\nu }=0.02$ and $\ensuremath  {\varrho }= 1$). \textit  {Bottom:} normalisation error without correlation ($\ensuremath  {\ensuremath  {\sigma }_\nu }=0.02$ and $\ensuremath  {\varrho }= 0$).}}{3}\protected@file@percent }
 \newlabel{fig:uncorr-peelle}{{2}{3}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Model fitting}{3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Model fitting}{4}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example of a fit of correlated data from a four telescope interferometer with medium resolution: 6 groups of 100 data points (light gray points with the measurement error bar) with 2\% uncorrelated measurement errors and 3\% correlated normalisation error follow model $1-u^2$ (thick gray line). Least-squares model fitting of $a-bu^2$ is performed using four prescriptions for the covariance matrix.}}{4}\protected@file@percent }
 \newlabel{fig:fitexample}{{3}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Pixel-to-visibility matrix}{4}\protected@file@percent }
 \bibdata{article}
 \bibcite{BUR11}{{1}{2011}{{{Burr} et~al.}}{{{Burr}, {Kawano}, {Talou}, {Pan} \& {Hengartner}}}}
 \bibcite{DAG94}{{2}{1994}{{{D'Agostini}}}{{{D'Agostini}}}}
@@ -26,4 +28,5 @@
 \bibcite{NIS14}{{6}{2014}{{{Nisius}}}{{{Nisius}}}}
 \bibcite{PEE87}{{7}{1987}{{{Peelle}}}{{{Peelle}}}}
 \bibcite{PER03}{{8}{2003}{{{Perrin}}}{{{Perrin}}}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Distribution of the fitted parameters and fit properties for the four covariance matrix prescriptions. $5\times 10^4$ simulations of 6 groups of 100 correlated data points $\ensuremath  {{\scriptstyle V}}$ ($\ensuremath  {\ensuremath  {\sigma }_\nu }= 2\%$, $\ensuremath  {\ensuremath  {\sigma }_\tau }= 3\%$, $\ensuremath  {\varrho }= 1$, normal distributions) following model $\ensuremath  {\mu }= 1-u^2$ are performed and fitted with $a - bu^2$ using least-squares minimisation. These groups of points are typical of a single snapshot obtained with a four-telescopes interferometer with medium spectral resolution. Reported quantities include median and 1-$\sigma $ interval of their distribution and, within brackets, the median uncertainty reported by the least squares fit: \emph  {leftmost column:} distribution of the least squares; \emph  {middle left:} constant coefficient $a$; \emph  {middle right:} quadadratic coefficient $b$; \emph  {rightmost column:} mean difference between model and data. The covariance matrix prescriptions are: \emph  {top row:} correlations are ignored; \emph  {second row:} a na\"\i {}ve covariance matrix uses the data values; \emph  {third row:} covariance matrix uses modelled values from fit without correlations; \emph  {bottom row:} covariance matrix and model are recursively computed, with the covariance matrix of the next recursion using the modelled value of the last step.}}{6}\protected@file@percent }
