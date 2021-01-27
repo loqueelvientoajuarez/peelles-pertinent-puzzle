@@ -1,48 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2019/dev/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: article.aux
 The style file: mnras.bst
 Database file #1: article.bib
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 8 entries,
+You've used 25 entries,
             2881 wiz_defined-function locations,
-            779 strings with 7228 characters,
-and the built_in function-call counts, 3666 in all, are:
-= -- 295
-> -- 269
-< -- 24
-+ -- 121
-- -- 38
-* -- 400
-:= -- 612
+            918 strings with 15309 characters,
+and the built_in function-call counts, 11604 in all, are:
+= -- 982
+> -- 759
+< -- 60
++ -- 348
+- -- 96
+* -- 1297
+:= -- 1789
 add.period$ -- 0
-call.type$ -- 8
-change.case$ -- 17
-chr.to.int$ -- 8
-cite$ -- 8
-duplicate$ -- 179
-empty$ -- 183
-format.name$ -- 54
-if$ -- 625
+call.type$ -- 25
+change.case$ -- 51
+chr.to.int$ -- 25
+cite$ -- 25
+duplicate$ -- 625
+empty$ -- 638
+format.name$ -- 164
+if$ -- 2079
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 7
-newline$ -- 38
-num.names$ -- 56
-pop$ -- 43
+missing$ -- 21
+newline$ -- 89
+num.names$ -- 155
+pop$ -- 169
 preamble$ -- 1
-purify$ -- 32
+purify$ -- 100
 quote$ -- 0
-skip$ -- 106
+skip$ -- 393
 stack$ -- 0
-substring$ -- 202
-swap$ -- 80
-text.length$ -- 32
+substring$ -- 676
+swap$ -- 264
+text.length$ -- 104
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
+type$ -- 225
 warning$ -- 0
-while$ -- 62
+while$ -- 178
 width$ -- 0
-write$ -- 93
+write$ -- 265

@@ -1,9 +1,11 @@
-\documentclass[twocolumn]{article}
+\documentclass[a4paper,fleqn,usenatbib]{mnras}
+\usepackage[T1]{fontenc}
 
 \usepackage{amsmath,amsbsy}
 \usepackage{graphicx}
-\usepackage{natbib}
+%\usepackage{natbib}
 \bibliographystyle{mnras}
+\usepackage{hyperref}
 
 \def\eqref#1{Eq.~(\ref{eq:#1})}
 
@@ -69,27 +71,38 @@
 \def\datarec#1{\mod_{#1}}
 \def\vdatarec#1{\ensuremath{\vec\mod_{#1}}}
 
+\def\aap{A\&A}
+\def\apj{ApJ}
+\def\mnras{MNRAS}
+\def\pasp{PASP}
+\def\nar{New Astronomy Reviews}
 
 \begin{document}
 
-\title{Fitting correlated interferometric data}
+\title{Avoiding bias in the model fitting of correlated interferometric data}
 \author{R\'egis Lachaume}
 \maketitle
 
 \begin{abstract}
-We show how Peelle's pertinent puzzle can be avoided in the framework of the least squares minimisation.
+I show how Peelle's pertinent puzzle can be avoided in the framework of the least squares minimisation.
 \end{abstract}
 
 \section{Introduction}
 
-Some widely used long-baseline interferometric observables, like the visibility amplitudes, are usually obtained by normalisation: A set of fringe contrasts obtained on a science target are divided by the intrumental transfer function determined on calibrator stars. The uncertainty in the transfer function results in correlations in the visibilities, as \citet{PER03} thoroughly examined.  In the context of experimental nuclear physics, \citet{PEE87} noted that such correlated measurements could provide an estimate falling below the individual data points, a paradox known as Peelle's Pertinent Puzzle (PPP). 
+Optical and infrared long-baseline interferometry consists in measuring the fringe contrast and phase of interferences in the recombined light collected at several telescopes\footnote{Recombination may be performed by software in the case of intensity interferometry or heterodyne detection.}. These observables hold information on the celestial object's spatial properties, which are usually obtained through model fitting. 
 
-\section{Normalisation by a transfer function}
+In spite of strong evidence of correlations in data, due to redundancy \citep[][in the case of closure phases]{MON07}, calibration \citep{PER03}, or atmospheric biases acting on all spectral channels in the same way \citep{LAW00}, only a few authors \citep{PER04,ABS06,BER06,LAC19,KAM20} have analysed correlated data while most assume independant errors.  In particular, the only interferometric instrument I know of with a data processing software taking into account one source of correlations---calibration---is the FLUOR\footnote{Fiber Linked Unit for Optical Recombination} instrument \citep[at IOTA\footnote{Infrared and Optical Telescope Array}, then CHARA\footnote{Center for High Angular Resolution Array}][]{PER04}. None of the five first and second-generation ones at the VLTI\footnote{Very Large Telescope Interforometer} does \citep{AMBER,MIDI,PIONIER,GRAVITYpipe,MATISSEpipe}.  The same lack of support for correlations is present in image reconstruction programmes \citep[e.g. MIRA, see][]{THI08}, model-fitting tools \citep[e.g. Litpro, see][]{TAL08}, or the still widespread first version of the Optical Interferometric FITS format \citep[OIFITS v. 1,][]{OIFITS1}.
 
-\subsection{Reframing Peelle's Pertinent Puzzle}
+Unfortunately, it has been shown that ignoring uncertainties may lead to significant errors in model paremeters as \citet{LAC19} showed with stellar diameters with PIONIER\footnote{Precision Integrated-Optics Near-infrared Imaging ExpeRiment} \citep{PIONIER} data at the VLTI. Also \citet{KAM20} established that correlations were necessary to achieve a higher contrast ratio in companion detection using GRAVITY \citep{GRAVITY} at the VLTI. 
 
+Several sources of correlated uncertainties occur in a multiplicative context, when several data points are normalised with the transfer function \citep{PER03} or the coherent fluxes are derived with the pixel-to-visibility matrix formalism \citep{TAT07}.  In both cases, the uncertainty on the multiplicative factor translates into a systematic, correlated one in the final data product. In the context of experimental nuclear physics, \citet{PEE87} noted that this scenario could lead to an estimate falling below the individual data points, a paradox known as Peelle's Pertinent Puzzle (PPP). It results from the usual and straighforward, but actually incorrect, way to propagate covariances \citep{DAG94,NEU12}.  A few workarounds have been proposed \citep[e.g.][]{BUR11,BEC12,NIS14} but they are not straighforward.
 
-In this introduction, we rewrite and adapt the original example in the context of long-baseline interferometry. Let's assume the inverse of the instrumental fringe contrast $\cot \pm \cot\reldev$ has been interpolated from one or several calibrator observations. A visibility amplitude is now now estimated from two contrast measurements $\raw_1 \pm \absdev$ and $\raw_2 \pm \absdev$.  For each measurement, visibility amplitudes are:
+The issue, however, not widely known in many other fields where the problem has seldom arisen.  In this paper, I present the paradox within the context of long-baseline interferometry, analyse its possible effect in model-fitting, and propose a simple, computer-efficient way to avoid it.
+
+\section{Peelle's Pertinent Puzzle basics}
+\label{sec:ppp}
+
+I rewrite and adapt Peelle's original example in the context of long-baseline interferometry. Let's assume the inverse of the instrumental fringe contrast $\cot \pm \cot\reldev$ has been interpolated from one or several calibrator observations. A visibility amplitude is now now estimated from two contrast measurements $\raw_1 \pm \absdev$ and $\raw_2 \pm \absdev$.  For each measurement, visibility amplitudes are:
 
 \begin{subequations}
 \begin{align}
@@ -131,62 +144,60 @@ It systematically falls below the average of the two values $\data_1$ and $\data
     \data &= \system{0.986}{0.004}{0.049}
 \end{align*}
 falls outside the data range.
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\linewidth]{pdf/original-peelle.pdf}
 \caption{Original Peelle problem rewritten in the context of interferometry.  \emph{Bottom:} Two raw visibility amplitudes $\nu_1$ and $\nu_2$ (points with statistic error bars of $\approx 0.6\%$) are calibrated by the transfer function $1/\tau$ (solid line with systematic error zone of 5\%). \emph{Top:} the two calibrated visibility measurements $\data_1$ and $\data_2$ (points with statistic error bars of $\approx 0.6\%$) are strongly correlated. The least-squares estimate for the visibility $\data$ (dashed line, with statistic uncertainty error zone displayed) falls outside of the data range.}
 \label{fig:peelle}
 \end{figure}
 
-See \cite{PEE87,DAG94,BUR11,NEU12,NEU13,NEU14,NIS14}.
-
-
-\begin{table}[t]
+\begin{table}
 \caption{Symbols used in this paper. Lower case bold font is used for vectors and upper case bold font for matrices.}
 \begin{tabular}{ll}
 \hline\hline
-Symbol               & Meaning\\
+Symbol                        & Meaning\\
 \hline
-$\mean a$            & true value of $a$\\
-$<a>$                & expectancy of $a$\\
-$\tr{\vec A}$        & transpose of $\vec A$\\
+$\mean a$                     & true value of $a$\\
+$<a>$                         & expectancy of $a$\\
+$\tr{\vec A}$                 & transpose of $\vec A$\\
 $\vec c = \vec a\hadam\vec b$ & elementwise product of $\vec a$ and $\vec b$\\
 $\vec C = \vec a\outer\vec b$ & outer product of $\vec a$ and $\vec b$\\
 $\vec c = \vec A\vec b$       & matrix product of $\vec A$ and $\vec b$\\
-$\delta$             & Kronecker delta\\
+$\delta$                      & Kronecker delta\\
 \hline
-$\vdata$             & data\\ 
-$\verror$            & error ($= \vdata - \vdatamean$)\\
-$\dev^2$             & variance ($= \expect{\error^2}$)\\
-$\vcov$              & covariance matrix ($= \expect{\verror\outer\verror}$)\\
-$\corr$              & correlation coefficient\\
-$\vsens$, $\msens$   & sensitivity vector or matrix\\
-$\vparam$            & parameters of the model\\
-$\vmod$              & model values ($= \vsens\vparam\approx\vdatamean$)\\
+$\vdata$                      & data\\ 
+$\verror$                     & error ($= \vdata - \vdatamean$)\\
+$\dev^2$                      & variance ($= \expect{\error^2}$)\\
+$\vcov$                       & covariance matrix ($= \expect{\verror\outer\verror}$)\\
+$\corr$                       & correlation coefficient\\
+$\vsens$, $\msens$            & sensitivity vector or matrix\\
+$\vparam$                     & parameters of the model\\
+$\vmod$                       & model values ($= \msens\vparam\approx\vdatamean$)\\
 \hline
-$a\meas$             & $a$ of the measurement error\\
-$a\norm$             & $a$ of the normalisation error\\
-$\ppp a$             & $a$ impacted by PPP\\
+$a\meas$                      & $a$ of the measurement error\\
+$a\norm$                      & $a$ of the normalisation error\\
+$\ppp a$                      & $a$ impacted by PPP\\
 \hline
 \end{tabular}
 \end{table}
 
-\subsection{Single value fit}
+\section{Single value fit}
+\label{sec:single} 
 
-We consider a set of measurements of a single normalised quantity, like the visibility amplitude, given by a vector $\vdata = \tr{(\data_1, \cdots, \data_n)}$. It is derived from an uncalibrated quantity like the fringe contrast, $\vraw = \tr{(\raw_1, \cdots, \raw_n)}$ and a normalisation factor, like the cotransfer function, $\vcot = \tr{(\cot_1, \cdots, \cot_n)}$ by 
+Let's consider a set of measurements of a single normalised quantity, like the visibility amplitude, given by a vector $\vdata = \tr{(\data_1, \cdots, \data_n)}$. It is derived from an uncalibrated quantity like the fringe contrast, $\vraw = \tr{(\raw_1, \cdots, \raw_n)}$ and a normalisation factor, like the cotransfer function, $\vcot = \tr{(\cot_1, \cdots, \cot_n)}$ by 
 \begin{equation}
     \vdata = \vcot\hadam\vraw,
 \end{equation}
-where $\hadam$ denotes the Hadamard (elementwise) product of vectors. We note $\datamean$, $\cotmean$, and $\rawmean$ the true, but unknown, values of these quantities.  The error vector on $\vdata$  
+where $\hadam$ denotes the Hadamard (elementwise) product of vectors. If $\datamean$, $\cotmean$, and $\rawmean$ the true, but unknown, values of these quantities, the error vector on $\vdata$  
 \begin{align}
     \verror    &= \vdata - \datamean, \\
-\intertext{can be written as a sum of measurement and normalisation errors if we ignore a second-order term:}
+\intertext{can be written as a sum of measurement and normalisation errors if one ignores a second-order term:}
     \verror    &= \vabserror + \datamean \vrelerror.\\
 \intertext{These errors are given by}
     \vabserror &= \cotmean (\vraw - \rawmean), \\
     \vrelerror &= \frac1\cotmean (\vcot-\cotmean).
 \end{align}
 
-We assume $\vabserror$ and $\vrelerror$ are independent error terms of mean 0 and standard deviations are $\absdev$ and $\reldev$, respectively. In addition, we consider correlation of the normalisation errors, with correlation coefficient $\corr$.  In the case of interferometry, it can arise from the uncertainty on the calibrators' geometry.  The covariance matrix is given by
+Let's assume $\vabserror$ and $\vrelerror$ are independent error terms of mean 0 and standard deviations are $\absdev$ and $\reldev$, respectively. In addition, I consider correlation of the normalisation errors, with correlation coefficient $\corr$.  In the case of interferometry, it can arise from the uncertainty on the calibrators' geometry.  The covariance matrix is given by
 \begin{align}
     \vcov     &= \expect{\verror\outer\verror},\\
 \intertext{where $\outer$ denotes the outer product of vectors and $\expect{}$ stands for the expectancy, so that}
@@ -211,7 +222,7 @@ The least squares estimate for $\datamean$ is given by
                   \frac { \tr\vsens{\ppp\vcov}^{-1}\vdata }
                         { \tr\vsens{\ppp\vcov}^{-1}\vsens }
 \end{equation}
-where $\vsens = \tr{(1, \cdots, 1)}$ is the trivial sensitivity vector.  The covariance matrix is the sum of an invertible diagonal matrix and one of rank one (see \eqref{cov}), so that the inverse is obtained using the Woodbury matrix identity: 
+where $\vsens = \tr{(1, \cdots, 1)}$ is the trivial sensitivity vector.  The covariance matrix is the sum of an invertible diagonal matrix and one of rank one---see \eqref{cov}---, so that the inverse is obtained using the Woodbury matrix identity: 
 \begin{align}
     \{ {\ppp\vcov}^{-1} \}_{ij} &= \frac{\delta_{ij}}{\dev_i^2}
          - \frac{\corr\reldev^2\data_i\data_j}
@@ -220,7 +231,7 @@ where $\vsens = \tr{(1, \cdots, 1)}$ is the trivial sensitivity vector.  The cov
   \intertext{where}
   \dev_i^2 &= \absdev^2+(1-\corr)\reldev^2\data_i^2.
 \end{align}
-It allows us to put the least squares estimate in the relatively compact form 
+It allows me to put the least squares estimate in the relatively compact form 
 \begin{equation}
   \ppp{\mod} = 
     \frac { 
@@ -259,22 +270,38 @@ Since $\expect{\error_i} = 0$ and $\expect{(\error_i-\error_j)^2} = 2\devmean^2$
               \reldev^2 \right]
 \end{equation}
 is biased.  If the data are not correlated ($\corr = 0$), the bias is small
-($\reldev^2$ to $2\reldev^2$) but it becomes large for correlated data if the number of points is large ($\sim n\reldev^2$ for fully correlated data).
-Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of
-the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to
-100). 
-\begin{figure}[t]
+($\reldev^2$ to $2\reldev^2$) but it becomes large for correlated data if the number of points is large ($\sim n\reldev^2$ for fully correlated data) as \citet{DAG94} already noted. Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to 100). 
+\begin{figure}
 \centering
 \includegraphics[width=\linewidth]{pdf/uncorrelated-peelle.pdf}
 \caption{Fit $\datappp$  to unresolved visibilities ($\data = 1$), as a function of the relative uncertainty on the calibration $\reldev$ and the number of measurements $n$. $2/n\times10^5$ simulations were made and averaged, assuming that $\abserror$ and $\relerror$ follow normal distributions. \textit{Top:} fully correlated normalisation like in original Peelle's puzzle ($\absdev=0.02$ and $\corr = 1$). \textit{Bottom:} normalisation error without correlation ($\absdev=0.02$ and $\corr = 0$).}
 \label{fig:uncorr-peelle}
 \end{figure}
 
-\subsection{Model fitting}
-We now consider a set of measurements corresponding to the linear model 
+For spectro-interferometric observations with 4 telescopes, the number of correlated points can be over 1,000, so even with a low correlation coefficient, the impact can be large. For instance, a single GRAVITY observation in high spectral resolution yields $n = 6 \times 210$ visibility amplitudes. With an observed correlation of $\rho \approx 16$\% in the instrumental visibility amplitudes \citep{KAM20} and a typical $\reldev = 1$--2\% normalisation error, the bias on the calibrated visibilities could be 2--8\%.  
+
+\section{Model fitting}
+\label{sec:model}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{pdf/fit-example.pdf}
+\caption{Example of a fit of correlated data from a four telescope interferometer with medium resolution: 6 groups of 100 data points (light gray points with the measurement error bar) with 2\% uncorrelated measurement errors and 3\% correlated normalisation.  Simulated data follow $\data = 1-x^2$ (thick gray line). Least-squares model fitting $\mod = a-bx^2$ is performed using the four prescriptions for the covariance matrix.}
+\label{fig:fitexample}
+\end{figure}
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{pdf/fit-quality.pdf}
+\caption{Distribution of the fitted parameters and fit properties for the four covariance matrix prescriptions. $5\times10^4$ simulations of 6 groups of 100 correlated data points $\data$ ($\absdev = 2\%$, $\reldev = 3\%$, $\corr = 1$, normal distributions) following $\data = (1-x^2)(1 + \error)+\error$ are performed and fitted with model $\mod = a - bx^2$ using least-squares minimisation. Reported quantities include median and 1-$\sigma$ interval of their distribution and, within brackets, the median uncertainty reported by the least squares fit. \emph{Leftmost column:} distribution of the least squares; \emph{middle left:} constant coefficient $a$; \emph{middle right:} quadadratic coefficient $b$; \emph{rightmost column:} mean difference between model and data. The covariance matrix prescriptions are: \emph{top row:} correlations are ignored; \emph{second row:} a na\"\i{}ve covariance matrix uses the data values; \emph{third row:} covariance matrix uses modelled values from fit without correlations; \emph{bottom row:} covariance matrix and model are recursively computed, with the covariance matrix of the next recursion using the modelled value of the last step.}
+\label{fig:fitanalysis}
+\end{figure*}
+
+Let's now consider a set of measurements corresponding to the linear model 
+
 \begin{align}
     \vmod  &= \msens\vparam,\\
-\intertext{where $\vparam$ are the unknown parameters and $\msens$ is the known sensitivity matrix. Typically, $\sens_{ik}=f_k(u_i, v_i)$ for a linear model and $\sens_{ik} = \partial f/\partial p_k(u_i, v_i)$ for a non-linear model that we choose to approximate by a linear one close to a solution. $(u, v)$ is the reduced baseline.  The true values $\vdatamean$ are are impacted by errors so that the data are} 
+\intertext{where $\vparam$ are the unknown parameters and $\msens$ is the known sensitivity matrix. Typically, $\sens_{ik}=f_k(u_i, v_i)$ for a linear model and $\sens_{ik} = \partial f/\partial p_k(u_i, v_i)$ for a non-linear model approximated by a linear one close to a solution. $(u, v)$ is the reduced baseline.  The true values $\vdatamean$ are are impacted by errors so that the data are} 
     \vdata &= \vdatamean + \verror\\
 \intertext{with the error term $\verror$ again expressed as the sum of a measurement error and a normalisation one:}
     \verror &=  \vabserror + \vrelerror \hadam \vdatamean.
@@ -283,73 +310,26 @@ The measurement errors $\vec\abserror$ and normalisation errors $\vec\relerror$ 
 \begin{align}
    \vparam &= (\tr\msens \vcov^{-1} \msens)^{-1} (\tr\msens \vcov^{-1} \vdata)
 \end{align}
-We investigate four ways to determine the covariance matrix
+I investigate four ways to determine the covariance matrix
 \begin{enumerate}
-    \item Ignoring the correlations in the normalisation using $\vcov_0 = \vabscov + (\vdata\outer\vdata)\hadam(\vrelcov\hadam\vec I)$. We note $\vdataflat = \msens(\tr\msens\vcov_0^{-1}\msens)^{-1}\tr\msens\vcov_0^{-1}\vdata$ the resulting model of the data. 
-    \item Using the na\"\i{}ve estimate $\ppp\vcov = \vabscov + (\vdata\outer\vdata)\hadam\vrelcov$ which is known to lead to Peelle's pertinent puzzle in the trivial case of a constant model. 
-    \item Using the data model of the fit without the normalisation error: $\vcov_1 = \vabscov + (\vdataflat\outer\vdataflat)\hadam\vrelcov$.  The resulting least squares model is $\vdatarec{1} = \msens(\tr\msens\vcov_1^{-1}\msens)^{-1}\tr\msens\vcov_1^{-1}\vdata$.
-    \item Recursively fitting the data by updating the data model in the covariance matrix. We derive $\vdatarec{k} = \msens(\tr\msens\vcov_k^{-1}\msens)^{-1}\tr\msens\vcov_k^{-1}\vdata$ using $\vcov_{k} = \vabscov + (\vdatarec{k-1}\outer\vdatarec{k-1})\hadam\vrelcov$, starting with the estimate $\vdatarec{1}$ ($k = 2$). 
+    \item Ignoring the correlations in the normalisation using $\vcov_0 = \vabscov + (\vdata\outer\vdata)\hadam(\vrelcov\hadam\vec I)$. Let $\vdataflat = \msens(\tr\msens\vcov_0^{-1}\msens)^{-1}\tr\msens\vcov_0^{-1}\vdata$ the resulting model of the data.\label{item:nocorr} 
+    \item Using the na\"\i{}ve estimate $\ppp\vcov = \vabscov + (\vdata\outer\vdata)\hadam\vrelcov$ which is known to lead to Peelle's pertinent puzzle in the trivial case of a constant model.\label{item:ppp}
+    \item Using the data model of the fit without the normalisation error: $\vcov_1 = \vabscov + (\vdataflat\outer\vdataflat)\hadam\vrelcov$. This is the generalisation of the two-variables approach by \citet{NEU14}. The resulting least squares model is $\vdatarec{1} = \msens(\tr\msens\vcov_1^{-1}\msens)^{-1}\tr\msens\vcov_1^{-1}\vdata$.\label{item:fit}
+    \item Recursively fitting the data by updating the data model in the covariance matrix. I derive $\vdatarec{k} = \msens(\tr\msens\vcov_k^{-1}\msens)^{-1}\tr\msens\vcov_k^{-1}\vdata$ using $\vcov_{k} = \vabscov + (\vdatarec{k-1}\outer\vdatarec{k-1})\hadam\vrelcov$, starting with the estimate $\vdatarec{1}$ ($k = 2$).\label{item:recfit}
 \end{enumerate}
 
-Figure~\ref{fig:fitexample} shows the example of a quadratic fit to partially correlated data with the four methods above.  As expected, the use of data $\vdata$ in the correlation matrix (method 2) leads to grossly underestimated data values, in the very same way as in the classical Peelle case (constant model).  Both method 3 and 4 yield reasonable estimates.
+Figure~\ref{fig:fitexample} shows the example of a typical centrosymmetric quadratic fit to under-resolved data obtained at a four-telescope facility in medium spectral resolution mode.  Given the dimensionless variable $x$ proportional to the projected baseline length ($x \propto \sqrt{u^2+v^2}$), a model fit $\mod = a - bx^2$ is performed to simulated data following $\data \approx 1 - x^2$, including a (correlated) systematic normalisation error $\relerror$ (3\%) and independent statistical errors $\abserror$ (2\%).  As expected, the use of data $\vdata$ in the correlation matrix (method \ref{item:ppp}) leads to grossly underestimated data values, in the very same way as in the classical Peelle case described in Sects.~\ref{sec:ppp}~\&~\ref{sec:single}.  Other methods, including ignoring correlations, yield reasonable fits.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{pdf/fit-example.pdf}
-\caption{Example of a fit of correlated data from a four telescope interferometer with medium resolution: 6 groups of 100 data points (light gray points with the measurement error bar) with 2\% uncorrelated measurement errors and 3\% correlated normalisation error follow model $1-u^2$ (thick gray line). Least-squares model fitting of $a-bu^2$ is performed using four prescriptions for the covariance matrix.}
-\label{fig:fitexample}
-\end{figure}
+Figure~\ref{fig:fitanalysis} sums up the behaviour of the same fit performed a large number of times on different simulated data sets, each following $\data \approx 1-x^2$.  For each correlation matrix prescription, it displays the dispersion of the reduced chi squared, the model parameters $a$ and $b$, and the difference between modelled value and true value. It also reports the uncertainty on model parameters reported by the least squares fit in comparison to the scatter of the distribution of the values. Both methods estimating the correlation  matrix from modelled data (\ref{item:fit} \& \ref{item:recfit}) are equivalent in terms of the absence of bias, dispersion of these quantities, and correct prediction of the uncertainty on model parameters.  While the model fits ignoring correlations (\ref{item:nocorr}) are not biased either, they display a higher dispersion of model parameters and grossly underestimate the uncertainty on model parameters.  The correlation matrix calculated from data (\ref{item:ppp}) is, as expected, strongly biased.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\linewidth]{pdf/fit-quality.pdf}
-\caption{Distribution of the fitted parameters and fit properties for the four covariance matrix prescriptions. $5\times10^4$ simulations of 6 groups of 100 correlated data points $\data$ ($\absdev = 2\%$, $\reldev = 3\%$, $\corr = 1$, normal distributions) following model $\mod = 1-u^2$ are performed and fitted with $a - bu^2$ using least-squares minimisation. These groups of points are typical of a single snapshot obtained with a four-telescopes interferometer with medium spectral resolution. Reported quantities include median and 1-$\sigma$ interval of their distribution and, within brackets, the median uncertainty reported by the least squares fit: \emph{leftmost column:} distribution of the least squares; \emph{middle left:} constant coefficient $a$; \emph{middle right:} quadadratic coefficient $b$; \emph{rightmost column:} mean difference between model and data. The covariance matrix prescriptions are: \emph{top row:} correlations are ignored; \emph{second row:} a na\"\i{}ve covariance matrix uses the data values; \emph{third row:} covariance matrix uses modelled values from fit without correlations; \emph{bottom row:} covariance matrix and model are recursively computed, with the covariance matrix of the next recursion using the modelled value of the last step.}
-\end{figure*}
 
-\section{Pixel-to-visibility matrix}
-\def\vcovmat#1{\vec\Sigma^{\vec{#1}}}
-\def\vcorrmat#1{\vec\rho^{\vec{#1}}}
-\def\covmat#1{\Sigma^{\vec{#1}}}
-\def\corrmat#1{\rho^{\vec{#1}}}
-I call $I_p$ the luminous intensity on detector part $p$ ($1 \cdots P$).  The scalar interferometric observable $V_o$ for observable $o$ ($1 \cdots O$) is deduced using the pixel-to-visibility matrix $M_{op}$ by
-\begin{align}
-    \vec{V} &= \vec{M}\vec{I},
-\intertext{where $\vec{M}$ and $\vec{I}$ can be written as}
-    \vec{I} &= \mean{\vec{I}}(1 + \vec\error^{\vec I}),\\
-    \vec{M} &= \mean{\vec{M}}(1 + \vec\error^{\vec M})
-\end{align}
-
-The covariance matrix $\covmat{V}$ can be obtained from corralation matrices 
-\begin{align}
-    \vcorrmat{I} &= <\vec\error^{\vec M} \outer \vec\error^{\vec I}>\\
-    \vcorrmat{M} &= <\vec\error^{\vec M} \outer \vec\error^{\vec M}>
-\end{align}
-as
-\begin{equation}
-   \begin{split}
-   \covmat{V}_{oo'} = \sum_{1\le p,p'\le P}&
-        \bigg[\Big( 
-             \corrmat{I}_{pp'}
-           + \corrmat{M}_{opop'}
-           - \corrmat{I}_{pp'}\corrmat{M}_{opop'}
-        \Big) \times\\
-        &\qquad \mean{I}_p \mean{I}_{p'} \mean{M}_{op} \mean{M}_{o'p'}\bigg], 
-    \end{split}
-\end{equation}
-assuming that $M$ and $I$ are not correlated.
-
-Once again the true value $\mean{\vec{I}}$ is unknown and replacing it by the
-observed value $\vec{I}$ may lead to bias. Unlike in the previous section,
-$\vec{I}$ is not directly produced by the modelling, so one would need
-to obtain it from $\vec{V}$.  However, the pixel-to-visibility matrix is
-not necessarily invertible.
 
 \section{Conclusion}
 \begin{enumerate}
 \item Peelle's pertinent puzzle primarily arises from an incorrect description of the relative uncertainties.  It will occur in a fully linear problem and, to some extent, without correlations.
 \item For uncorrelated data, the relative bias is of the order of the square of the relative uncertainty as long as errors remain small. It increases twofold when the number of data points becomes large.
 \item For correlated data, the relative bias is larger by a factor of the order of the number of correlated points as long as the resulting error remain small.
-\item In least-squares model fits, the problem disappears if the uncertainties, or the covariance matrix, are updated with the model values instead of the measurement values.
+\item In least-squares model fits, the problem disappears if the uncertainties, or the covariance matrix, are updated with the model values instead of the measurement values.  
 \end{enumerate}
 
 \bibliography{article}

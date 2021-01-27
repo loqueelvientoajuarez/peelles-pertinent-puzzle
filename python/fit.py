@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import numpy as np
 import numpy.linalg as la
 from numpy.random import RandomState
@@ -15,12 +17,12 @@ constant.desc = 'a'
 def underresolved(x, a):
     return 1 - a * x ** 2
 underresolved.p0 = [1.]
-underresolved.desc = '1 - au^2' 
+underresolved.desc = '1 - ax^2' 
 
 def quadratic(x, a, b):
     return a - b * x ** 2
 quadratic.p0 = [1., 1.]
-quadratic.desc = 'a - bu^2'
+quadratic.desc = 'a - bx^2'
 
 def simulate_data(sigma_sys=0.02, sigma_sta=0.02, nsta=100, nsys=6,
     f=quadratic, p0=None, cov_model='fit', nsim=None, xmin=0.1, xmax=0.5):
@@ -122,7 +124,7 @@ def test_model(model=quadratic,
     ax = fig.add_subplot(1, 1, 1)
     x0 = np.linspace(0, 1.0*xmax, 300)
     gray = (.3,.3,.3)
-    ax.text(xmax, 1.07, '${\\scriptstyle V} = (1-u^2)(1 + \\eta_\\tau) + \\eta_\\nu$',
+    ax.text(xmax, 1.07, '${\\scriptstyle V} = (1-x^2)(1 + \\eta_\\tau) + \\eta_\\nu$',
         fontsize=8, va='top', ha='right', color=gray)
     ax.text(xmax, 1.03, 'fitted with $\\mu = {}$'.format(model.desc),
         fontsize=8, va='top', ha='right', color=gray)
@@ -137,7 +139,7 @@ def test_model(model=quadratic,
             ax.errorbar(x, y, yerr=yerr, fmt='none', ecolor=gray,
                 mec=gray, mfc=gray)
         ax.plot(x0, ym, f, label=cm)
-    ax.set_xlabel('$u$')
+    ax.set_xlabel('$x$')
     ax.set_ylabel('${\\scriptstyle V}$')
     ax.set_ylim(0.6, 1.08)
     ax.set_xlim(0, 1.01 * xmax)
@@ -243,7 +245,7 @@ def test_covmodels(model=quadratic, nsim=100, sigma_sys=0.03, sigma_sta=0.02,
     #    ymin, ymax = ylim[:,0].min(), ylim[:,1].max()
     #     for j in range(npar + 2):
     #        axes[i][j].set_ylim(ymin, 1.15 * ymax)
-    text='${{\\scriptstyle V}} = (1-u^2)(1 + \\eta_\\tau) + \\eta_\\nu\\mathrm{{\\ fitted\\ with\\ }} \\mu={}$'.format(model.desc)
+    text='${{\\scriptstyle V}} = (1-x^2)(1 + \\eta_\\tau) + \\eta_\\nu\\mathrm{{\\ fitted\\ with\\ }} \\mu={}$'.format(model.desc)
     fig.suptitle(text)
     fig.text(0.005, 0.5, 'covariance determination method', 
         rotation=90, va='center', ha='left')
@@ -252,5 +254,6 @@ def test_covmodels(model=quadratic, nsim=100, sigma_sys=0.03, sigma_sta=0.02,
         fig.savefig('../pdf/fit-quality.pdf')
     return fig
 
-# test_model(save=True)
-test_covmodels(nsim=50_000, save=True)
+if __name__ == "__main__":
+    test_model(save=True ) # Fig 3
+    test_covmodels(nsim=50_000, save=True) # Fig. 4

@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 from numpy.random import lognormal, rand, randint, multivariate_normal, normal, poisson
 
 import numpy as np
@@ -65,7 +67,7 @@ def plot_bias(fig, corr, label, axnum=(1,1,1), nsigma=25, plot_taylor=False):
     ax.text(0.005, 0.07, label, ha='left', va='bottom', fontsize=8)
 
 # Plot uncorrelated
-def plot_figure2():
+def plot_figure1(save=True):
     plt.style.use('mnras')
     fig = plt.figure(2)
     fig.subplots_adjust(hspace=0)
@@ -76,9 +78,10 @@ def plot_figure2():
     plot_bias(fig, 0., 'uncorrelated normalisation', 
                  axnum=(2, 1, 2), plot_taylor=False)
     fig.show()
-    fig.savefig('../pdf/uncorrelated-peelle.pdf')
+    if save:
+        fig.savefig('../pdf/uncorrelated-peelle.pdf')
 
-def plot_figure9(tau=2, nu=0.5, sigma_sys=0.05, sigma_sta=0.006, 
+def plot_figure2(tau=2, nu=0.5, sigma_sys=0.05, sigma_sta=0.006, 
         dnu=0.01, save=False):
     plt.style.use('mnras')
     fig = plt.figure(9)
@@ -138,5 +141,6 @@ def plot_figure9(tau=2, nu=0.5, sigma_sys=0.05, sigma_sta=0.006,
     if save:
         fig.savefig('../pdf/original-peelle.pdf')
 
-plot_figure2()
-#plot_figure9(save=True)
+if __name__ == "__main__":
+    plot_figure1(save=True)
+    plot_figure2(save=True)
