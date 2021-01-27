@@ -1,9 +1,8 @@
 \documentclass[a4paper,fleqn,usenatbib]{mnras}
-\usepackage[T1]{fontenc}
+\pdfoutput=1
 
 \usepackage{amsmath,amsbsy}
 \usepackage{graphicx}
-%\usepackage{natbib}
 \bibliographystyle{mnras}
 \usepackage{hyperref}
 
@@ -80,12 +79,21 @@
 \begin{document}
 
 \title{Avoiding bias in the model fitting of correlated interferometric data}
-\author{R\'egis Lachaume}
+\author{R\'egis Lachaume$^{1,2}$\thanks{regis.lachaume@gmail.com}
+\\
+$^{1}$Instituto de Astronom\'\i{}a, Facultad de F\'\i{}sica, Pontificia Universidad Cat\'olica de Chile, casilla 306, Santiago 22, Chile\\
+$^{2}$Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany
+}
 \maketitle
 
 \begin{abstract}
-I show how Peelle's pertinent puzzle can be avoided in the framework of the least squares minimisation.
+In optical and infrared long-baseline interferometry, data often display significant correlated errors because of uncertain multiplicative factors such as the instrumental transfer function or the pixel-to-visibility matrix.  In the context of model fitting, this situation often leads to a significant bias, which in the gravest cases can show a fit passing outide of all error bars. It is known in nuclear physics as Peelle's Pertinent Puzzle.  I show how this arises in the context of interferometry and how severe it can be in a realistic setting.  I then give a conceptually simple and computationnally cheap way to avoid the issue: model the data without covariances, estimate the covariance matrix by error propagation using the modelled data instead of the actual data, and, finally, perform the model fitting using the covariance matrix.
 \end{abstract}
+
+\begin{keywords}
+techniques: interferometric --- 
+methods: statistical
+\end{keywords}
 
 \section{Introduction}
 
@@ -93,7 +101,7 @@ Optical and infrared long-baseline interferometry consists in measuring the frin
 
 In spite of strong evidence of correlations in data, due to redundancy \citep[][in the case of closure phases]{MON07}, calibration \citep{PER03}, or atmospheric biases acting on all spectral channels in the same way \citep{LAW00}, only a few authors \citep{PER04,ABS06,BER06,LAC19,KAM20} have analysed correlated data while most assume independant errors.  In particular, the only interferometric instrument I know of with a data processing software taking into account one source of correlations---calibration---is the FLUOR\footnote{Fiber Linked Unit for Optical Recombination} instrument \citep[at IOTA\footnote{Infrared and Optical Telescope Array}, then CHARA\footnote{Center for High Angular Resolution Array}][]{PER04}. None of the five first and second-generation ones at the VLTI\footnote{Very Large Telescope Interforometer} does \citep{AMBER,MIDI,PIONIER,GRAVITYpipe,MATISSEpipe}.  The same lack of support for correlations is present in image reconstruction programmes \citep[e.g. MIRA, see][]{THI08}, model-fitting tools \citep[e.g. Litpro, see][]{TAL08}, or the still widespread first version of the Optical Interferometric FITS format \citep[OIFITS v. 1,][]{OIFITS1}.
 
-Unfortunately, it has been shown that ignoring uncertainties may lead to significant errors in model paremeters as \citet{LAC19} showed with stellar diameters with PIONIER\footnote{Precision Integrated-Optics Near-infrared Imaging ExpeRiment} \citep{PIONIER} data at the VLTI. Also \citet{KAM20} established that correlations were necessary to achieve a higher contrast ratio in companion detection using GRAVITY \citep{GRAVITY} at the VLTI. 
+Unfortunately, it has been shown that ignoring uncertainties may lead to significant errors in model paremeters as \citet{LAC19} evidenced with stellar diameters using PIONIER\footnote{Precision Integrated-Optics Near-infrared Imaging ExpeRiment} \citep{PIONIER} data at the VLTI. Also \citet{KAM20} established that correlations were necessary to achieve a higher contrast ratio in companion detection using GRAVITY \citep{GRAVITY} at the VLTI. 
 
 Several sources of correlated uncertainties occur in a multiplicative context, when several data points are normalised with the transfer function \citep{PER03} or the coherent fluxes are derived with the pixel-to-visibility matrix formalism \citep{TAT07}.  In both cases, the uncertainty on the multiplicative factor translates into a systematic, correlated one in the final data product. In the context of experimental nuclear physics, \citet{PEE87} noted that this scenario could lead to an estimate falling below the individual data points, a paradox known as Peelle's Pertinent Puzzle (PPP). It results from the usual and straighforward, but actually incorrect, way to propagate covariances \citep{DAG94,NEU12}.  A few workarounds have been proposed \citep[e.g.][]{BUR11,BEC12,NIS14} but they are not straighforward.
 
@@ -183,7 +191,14 @@ $\ppp a$                      & $a$ impacted by PPP\\
 \section{Single value fit}
 \label{sec:single} 
 
-Let's consider a set of measurements of a single normalised quantity, like the visibility amplitude, given by a vector $\vdata = \tr{(\data_1, \cdots, \data_n)}$. It is derived from an uncalibrated quantity like the fringe contrast, $\vraw = \tr{(\raw_1, \cdots, \raw_n)}$ and a normalisation factor, like the cotransfer function, $\vcot = \tr{(\cot_1, \cdots, \cot_n)}$ by 
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{pdf/uncorrelated-peelle.pdf}
+\caption{Fit $\datappp$  to unresolved visibilities ($\data = 1$), as a function of the relative uncertainty on the calibration $\reldev$ and the number of measurements $n$. $2/n\times10^5$ simulations were made and averaged, assuming that $\abserror$ and $\relerror$ follow normal distributions. \textit{Top:} fully correlated normalisation like in original Peelle's puzzle ($\absdev=0.02$ and $\corr = 1$). \textit{Bottom:} normalisation error without correlation ($\absdev=0.02$ and $\corr = 0$).}
+\label{fig:uncorr-peelle}
+\end{figure}
+
+Let's consider a set of measurements of a single normalised quantity, like the visibility amplitude, given by a column vector $\vdata = \tr{(\data_1, \cdots, \data_n)}$. It is derived from an uncalibrated quantity like the fringe contrast, $\vraw = \tr{(\raw_1, \cdots, \raw_n)}$ and a normalisation factor, like the cotransfer function, $\vcot = \tr{(\cot_1, \cdots, \cot_n)}$ by 
 \begin{equation}
     \vdata = \vcot\hadam\vraw,
 \end{equation}
@@ -271,12 +286,6 @@ Since $\expect{\error_i} = 0$ and $\expect{(\error_i-\error_j)^2} = 2\devmean^2$
 \end{equation}
 is biased.  If the data are not correlated ($\corr = 0$), the bias is small
 ($\reldev^2$ to $2\reldev^2$) but it becomes large for correlated data if the number of points is large ($\sim n\reldev^2$ for fully correlated data) as \citet{DAG94} already noted. Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to 100). 
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{pdf/uncorrelated-peelle.pdf}
-\caption{Fit $\datappp$  to unresolved visibilities ($\data = 1$), as a function of the relative uncertainty on the calibration $\reldev$ and the number of measurements $n$. $2/n\times10^5$ simulations were made and averaged, assuming that $\abserror$ and $\relerror$ follow normal distributions. \textit{Top:} fully correlated normalisation like in original Peelle's puzzle ($\absdev=0.02$ and $\corr = 1$). \textit{Bottom:} normalisation error without correlation ($\absdev=0.02$ and $\corr = 0$).}
-\label{fig:uncorr-peelle}
-\end{figure}
 
 For spectro-interferometric observations with 4 telescopes, the number of correlated points can be over 1,000, so even with a low correlation coefficient, the impact can be large. For instance, a single GRAVITY observation in high spectral resolution yields $n = 6 \times 210$ visibility amplitudes. With an observed correlation of $\rho \approx 16$\% in the instrumental visibility amplitudes \citep{KAM20} and a typical $\reldev = 1$--2\% normalisation error, the bias on the calibrated visibilities could be 2--8\%.  
 
@@ -306,7 +315,7 @@ Let's now consider a set of measurements corresponding to the linear model
 \intertext{with the error term $\verror$ again expressed as the sum of a measurement error and a normalisation one:}
     \verror &=  \vabserror + \vrelerror \hadam \vdatamean.
 \end{align}
-The measurement errors $\vec\abserror$ and normalisation errors $\vec\relerror$ following multivariate distributions of mean zero and covariance matrices $\vabscov$ and $\vrelcov$ respectively. Given the covariance matrix $\vcov$ of this model, the least squares estimate is
+The measurement errors $\vec\abserror$ and normalisation errors $\vec\relerror$ following multivariate distributions of mean zero, with covariance matrices $\vabscov$ and $\vrelcov$ respectively. Given the covariance matrix $\vcov$ of this model, the least squares estimate is
 \begin{align}
    \vparam &= (\tr\msens \vcov^{-1} \msens)^{-1} (\tr\msens \vcov^{-1} \vdata)
 \end{align}
@@ -318,19 +327,22 @@ I investigate four ways to determine the covariance matrix
     \item Recursively fitting the data by updating the data model in the covariance matrix. I derive $\vdatarec{k} = \msens(\tr\msens\vcov_k^{-1}\msens)^{-1}\tr\msens\vcov_k^{-1}\vdata$ using $\vcov_{k} = \vabscov + (\vdatarec{k-1}\outer\vdatarec{k-1})\hadam\vrelcov$, starting with the estimate $\vdatarec{1}$ ($k = 2$).\label{item:recfit}
 \end{enumerate}
 
-Figure~\ref{fig:fitexample} shows the example of a typical centrosymmetric quadratic fit to under-resolved data obtained at a four-telescope facility in medium spectral resolution mode.  Given the dimensionless variable $x$ proportional to the projected baseline length ($x \propto \sqrt{u^2+v^2}$), a model fit $\mod = a - bx^2$ is performed to simulated data following $\data \approx 1 - x^2$, including a (correlated) systematic normalisation error $\relerror$ (3\%) and independent statistical errors $\abserror$ (2\%).  As expected, the use of data $\vdata$ in the correlation matrix (method \ref{item:ppp}) leads to grossly underestimated data values, in the very same way as in the classical Peelle case described in Sects.~\ref{sec:ppp}~\&~\ref{sec:single}.  Other methods, including ignoring correlations, yield reasonable fits.
+In order to compare these covariance matrix prescriptions, I will use the typical example of an under-resolved centrosymmetric source observed at a four-telescope facility in high spectral resolution. In the under-resolved case all models---Gaussian, uniform disc, or limb-darkened disc---are equivalent \citep{LAC03}--- so I will use instead a linear least squares fit $\mod = a - bx^2$ to $\data \approx 1 - x^2$ where $x$ is dimensionless variable proportional to the projected baseline length $\sqrt{u^2+v^2}$. This fit corresponds to the second-order Taylor development of any of the aforementionned models.  Figure~\ref{fig:fitexample} shows the example of such a fit performed for each covariance matrix prescription.  Data has been simulated using $\data = (1-x^2)(1 + \relerror) + \abserror$ where $\relerror$ is a fully correlated normalisation error (3\%) and $\abserror$ are uncorrelated statistical errors (2\%). As expected, the use of data $\vdata$ in the correlation matrix (method \ref{item:ppp}) leads to grossly underestimated data values, in the very same way as in the classical Peelle case described in Sects.~\ref{sec:ppp}~\&~\ref{sec:single}.  Other methods, including ignoring correlations, yield reasonable fits.
 
-Figure~\ref{fig:fitanalysis} sums up the behaviour of the same fit performed a large number of times on different simulated data sets, each following $\data \approx 1-x^2$.  For each correlation matrix prescription, it displays the dispersion of the reduced chi squared, the model parameters $a$ and $b$, and the difference between modelled value and true value. It also reports the uncertainty on model parameters reported by the least squares fit in comparison to the scatter of the distribution of the values. Both methods estimating the correlation  matrix from modelled data (\ref{item:fit} \& \ref{item:recfit}) are equivalent in terms of the absence of bias, dispersion of these quantities, and correct prediction of the uncertainty on model parameters.  While the model fits ignoring correlations (\ref{item:nocorr}) are not biased either, they display a higher dispersion of model parameters and grossly underestimate the uncertainty on model parameters.  The correlation matrix calculated from data (\ref{item:ppp}) is, as expected, strongly biased.
+Figure~\ref{fig:fitanalysis} sums up the behaviour of the same fit performed a large number of times on different simulated data sets, each following $\data \approx 1-x^2$.  For each correlation matrix prescription, it displays the dispersion of the reduced chi squared, the model parameters $a$ and $b$, and the difference between modelled value and true value. It also reports the uncertainty on model parameters reported by the least squares fit in comparison to the scatter of the distribution of the values. While the model fits ignoring correlations \ref{item:nocorr} does not show any bias, they display a higher dispersion of model parameters and grossly underestimate the uncertainty on model parameters.  The correlation matrix calculated from data \ref{item:ppp} is, as expected, strongly biased. Both methods estimating the correlation  matrix from modelled data, \ref{item:fit} \& \ref{item:recfit}, are equivalent in terms of the absence of bias, dispersion of these quantities, and correct prediction of the uncertainty on model parameters.
+
+Given that fitting recursively the covariance matrix doesn't yield additional benefits, I would suggest to use method \ref{item:fit}.  
 
 
 
 \section{Conclusion}
-\begin{enumerate}
-\item Peelle's pertinent puzzle primarily arises from an incorrect description of the relative uncertainties.  It will occur in a fully linear problem and, to some extent, without correlations.
-\item For uncorrelated data, the relative bias is of the order of the square of the relative uncertainty as long as errors remain small. It increases twofold when the number of data points becomes large.
-\item For correlated data, the relative bias is larger by a factor of the order of the number of correlated points as long as the resulting error remain small.
-\item In least-squares model fits, the problem disappears if the uncertainties, or the covariance matrix, are updated with the model values instead of the measurement values.  
-\end{enumerate}
+
+The standard, but incorrect, covariance propagation in any ``normalisation'' setting leads to bias in the model parameters of a least-squares fit taking correlations into account.  Some bias will even occur without correlations, but the effect is strongest when a large set of correlated data is modelled.  This is precisely the case in optical and infrared long-baseline interferometry, where the calibration of spectrally dispersed fringes easily yields $10^2$ to $10^3$ correlated data points.
+
+While solutions exist that are either numerically expensive or require some care to be implemented \citep{BUR11,BEC12,NIS14}, I have shown with a simple example that there is an easy and cheap way to solve the issue. First a uncorrelated fit is performed to estimate the true values corresponding to the data.  Secondly, these estimates are used to determine the covariance matrix by error propagation. At last, this covariance matrix is used to perform a model-fit.
+
+
+
 
 \bibliography{article}
 
