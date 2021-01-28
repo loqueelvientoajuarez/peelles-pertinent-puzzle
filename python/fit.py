@@ -23,6 +23,13 @@ def quadratic(x, a, b):
     return a - b * x ** 2
 quadratic.p0 = [1., 1.]
 quadratic.desc = 'a - bx^2'
+quadratic.val = '1 - x^2'
+
+def gauss(x, a, b):
+    return a * np.exp(-(b*x) ** 2)
+gauss.p0 = [1., 4.]
+gauss.desc = 'a\\mathrm{e}^{-bx^2}'
+gauss.val = '\\mathrm{e}^{-4x^2}'
 
 def simulate_data(sigma_sys=0.02, sigma_sta=0.02, nsta=100, nsys=6,
     f=quadratic, p0=None, cov_model='fit', nsim=None, xmin=0.1, xmax=0.5):
@@ -245,15 +252,21 @@ def test_covmodels(model=quadratic, nsim=100, sigma_sys=0.03, sigma_sta=0.02,
     #    ymin, ymax = ylim[:,0].min(), ylim[:,1].max()
     #     for j in range(npar + 2):
     #        axes[i][j].set_ylim(ymin, 1.15 * ymax)
-    text='${{\\scriptstyle V}} = (1-x^2)(1 + \\eta_\\tau) + \\eta_\\nu\\mathrm{{\\ fitted\\ with\\ }} \\mu={}$'.format(model.desc)
+    text=f'${{\\scriptstyle V}} = {model.val}(1 + \\eta_\\tau) + \\eta_\\nu\\mathrm{{\\ fitted\\ with\\ }} \\mu={model.desc}$'
     fig.suptitle(text)
     fig.text(0.005, 0.5, 'covariance determination method', 
         rotation=90, va='center', ha='left')
     fig.show()
     if save:
-        fig.savefig('../pdf/fit-quality.pdf')
+        if model.name != 'quadratic':
+            filename = f'fit-quality-{model.name}.pdf'
+        else:
+            filename = '../pdf/fit-quality.pdf'
+        fig.savefig(filename)
     return fig
+
 
 if __name__ == "__main__":
     test_model(save=True ) # Fig 3
     test_covmodels(nsim=50_000, save=True) # Fig. 4
+    test_covmodels(nsim=50_000, save=True, model=gauss) # check
