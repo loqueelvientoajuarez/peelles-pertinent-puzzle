@@ -1,94 +1,34 @@
-\documentclass[a4paper,fleqn,usenatbib]{mnras}
-\pdfoutput=1
+\documentclass{pasa}
 
+\usepackage{definitions}
 \usepackage{amsmath,amsbsy}
 \usepackage{graphicx}
-\bibliographystyle{mnras}
-\usepackage{hyperref}
+
 \usepackage{subfigure}
-
-\def\eqref#1{Eq.~(\ref{eq:#1})}
-
-\def\vec#1{\ensuremath{\boldsymbol{#1}}}
-\def\tr#1{\ensuremath{{#1}^\text{\textsc{t}}}}
-\def\expect#1{\ensuremath{ {<#1>} }}
-\def\ppp#1{#1^\star}
-
-\def\norm{_\tau}
-\def\meas{_\nu}
-\def\mean#1{\overline{#1}}
-
-\let\outer=\otimes
-\let\hadam=\odot
-\def\system#1#2#3{\ensuremath{#1 \pm\ #2\ (\pm #3)}}
-\def\raw{\ensuremath{\nu}}
-\def\vraw{\ensuremath{\vec\raw}}
-\def\rawmean{\ensuremath{\mean\raw}}
-\def\vrawmean{\ensuremath{\mean\vraw}}
-
-\def\cot{\ensuremath{\tau}}
-\def\vcot{\ensuremath{\vec\cot}}
-\def\cotmean{\ensuremath{\mean\cot}}
-\def\vcotmean{\ensuremath{\mean\vcot}}
-
-\def\data{\ensuremath{{\scriptstyle V}}}
-\def\vdata{\ensuremath{\vec\data}}
-\def\datamean{\ensuremath{\mean\data}}
-\def\vdatamean{\ensuremath{\mean\vdata}}
-
-\def\mod{\ensuremath{\mu}}
-\def\vmod{\ensuremath{\vec\mu}}
-\def\error{\ensuremath{\eta}}
-\def\verror{\ensuremath{\vec\error}}
-\def\relerror{\ensuremath{\error\norm}}
-\def\abserror{\ensuremath{\error\meas}}
-\def\vrelerror{\ensuremath{\vec\relerror}}
-\def\vabserror{\ensuremath{\vec\abserror}}
-\def\dev{\ensuremath{\sigma}}
-\def\devmean{\ensuremath{\mean\dev}}
-\def\reldev{\ensuremath{\dev\norm}}
-\def\absdev{\ensuremath{\dev\meas}}
-\def\cov{\ensuremath{\Sigma}}
-\def\vcov{\ensuremath{\vec\cov}}
-\def\abscov{\ensuremath{\cov\meas}}
-\def\relcov{\ensuremath{\cov\norm}}
-\def\vabscov{\ensuremath{\vec\abscov}}
-\def\vrelcov{\ensuremath{\vec\relcov}}
-\def\corr{\ensuremath{\varrho}}
-\def\sens{\ensuremath{x}}
-\def\vsens{\ensuremath{\vec\sens}}
-\def\msens{\ensuremath{\vec X}}
-\def\param{\ensuremath{p}}
-\def\vparam{\ensuremath{\vec\param}}
-\def\dataflat{\ensuremath{\mod_0}}
-\def\vdataflat{\ensuremath{\vec\dataflat}}
-\def\paramflat{\ensuremath{\param\meas}}
-\def\vparamflat{\ensuremath{\vec\paramflat}}
-\def\paramppp{\ppp{\param}}
-\def\vparamppp{\ensuremath{\vec\paramppp}}
-\def\datappp{\ppp{\mod}}
-\def\vdatappp{\ensuremath{\vec\datappp}}
-\def\datarec#1{\mod_{#1}}
-\def\vdatarec#1{\ensuremath{\vec\mod_{#1}}}
-
-\def\aap{A\&A}
-\def\apj{ApJ}
-\def\mnras{MNRAS}
-\def\pasp{PASP}
-\def\nar{New Astronomy Reviews}
-
-\begin{document}
 
 \title{Bias-free model fitting of correlated data in interferometry}
 \author[Lachaume]{R\'egis Lachaume$^{1,2}$\thanks{regis.lachaume@gmail.com}
-\\
-$^{1}$Instituto de Astronom\'\i{}a, Facultad de F\'\i{}sica, Pontificia Universidad Cat\'olica de Chile, casilla 306, Santiago 22, Chile\\
-$^{2}$Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany
+\affil{$^{1}$Instituto de Astronom\'\i{}a, Facultad de F\'\i{}sica, Pontificia Universidad Cat\'olica de Chile, casilla 306, Santiago 22, Chile}%
+\affil{$^{2}$Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}%
 }
+
+\jid{PASA}
+\doi{TBD}
+\jyear{\the\year}
+\usepackage{aas_macros}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue}
+
+\renewcommand{\floatpagefraction}{.9}%
+
+\begin{document}
+
+\begin{frontmatter}
 \maketitle
 
 \begin{abstract}
-In optical and infrared long-baseline interferometry, data often display significant correlated errors because of uncertain multiplicative factors such as the instrumental transfer function or the pixel-to-visibility matrix.  In the context of model fitting, this situation often leads to a significant bias, which in the gravest cases can show a fit passing outside of all error bars. It is known in nuclear physics as Peelle's Pertinent Puzzle.  I show how this arises in the context of interferometry and how severe it can be in a realistic setting.  I then give a conceptually simple and computationally cheap way to avoid the issue: model the data without covariances, estimate the covariance matrix by error propagation using the modelled data instead of the actual data, and, finally, perform the model fitting using the covariance matrix.
+In optical and infrared long-baseline interferometry, data often display significant correlated errors because of uncertain multiplicative factors such as the instrumental transfer function or the pixel-to-visibility matrix.  In the context of model fitting, this situation often leads to a significant bias. In the gravest cases can show a fit passing outside of all error bars. It is known in nuclear physics as Peelle's Pertinent Puzzle.  I show how this arises in the context of interferometry and how severe it can be in a realistic setting.  I then give a conceptually simple and computationally cheap way to avoid the issue: model the data without covariances, estimate the covariance matrix by error propagation using the modelled data instead of the actual data, and perform the model fitting using the covariance matrix.
 \end{abstract}
 
 \begin{keywords}
@@ -96,17 +36,19 @@ techniques: interferometric ---
 methods: statistical
 \end{keywords}
 
+\end{frontmatter}
+
 \section{Introduction}
 
-Optical and infrared long-baseline interferometry consists in measuring the fringe contrast and phase of interference fringes in the recombined light collected at several telescopes\footnote{Recombination may be performed by software in the case of intensity interferometry or heterodyne detection.}. These observables hold information on the celestial object's spatial properties, which are usually obtained through model fitting. 
+Optical and infrared long-baseline interferometry consists in measuring the fringe contrast and phase of interference fringes in the recombined light collected at several telescopes\footnote{Recombination may be performed by software in the case of intensity interferometry or heterodyne detection.}. These observables hold information on the celestial object's spatial properties, often obtained through model fitting. 
 
 In spite of strong evidence of correlations in data, due to redundancy \citep[][in the case of closure phases]{MON07}, calibration \citep{PER03}, or atmospheric biases acting on all spectral channels in the same way \citep{LAW00}, only a few authors \citep{PER04,ABS06,BER06,LAC19,KAM20} have analysed correlated data while most assume independent errors.  In particular, the only interferometric instrument I know of with a data processing software taking into account one source of correlations---calibration---is FLUOR\footnote{Fiber Linked Unit for Optical Recombination} \citep[at IOTA\footnote{Infrared and Optical Telescope Array}, then CHARA\footnote{Center for High Angular Resolution Array}, ][]{PER04}. None of the five first and second-generation ones at the VLTI\footnote{Very Large Telescope Interforometer} does \citep{AMBER,MIDI,PIONIER,GRAVITYpipe,MATISSEpipe}.  The same lack of support for correlations is present in image reconstruction programmes \citep[e.g. MIRA, see][]{THI08}, model-fitting tools \citep[e.g. Litpro, see][]{TAL08}, or the still widespread first version of the Optical Interferometric FITS format \citep[OIFITS v. 1,][]{OIFITS1}.
 
-Unfortunately, it has been shown that ignoring uncertainties may lead to significant errors in model parameters as \citet{LAC19} evidenced with stellar diameters using PIONIER\footnote{Precision Integrated-Optics Near-infrared Imaging ExpeRiment} \citep{PIONIER} data at the VLTI. Also \citet{KAM20} established that correlations were necessary to achieve a higher contrast ratio in companion detection using GRAVITY \citep{GRAVITY} at the VLTI. 
+Unfortunately, ignoring uncertainties may lead to significant errors in model parameters as \citet{LAC19} evidenced with stellar diameters using PIONIER\footnote{Precision Integrated-Optics Near-infrared Imaging ExpeRiment} \citep{PIONIER} data at the VLTI. Also \citet{KAM20} established that correlations were necessary to achieve a higher contrast ratio in companion detection using GRAVITY \citep{GRAVITY} at the VLTI. 
 
 Several sources of correlated uncertainties occur in a multiplicative context, when several data points are normalised with the transfer function \citep{PER03} or the coherent fluxes are derived with the pixel-to-visibility matrix formalism \citep{TAT07}.  In both cases, the uncertainty on the multiplicative factor translates into a systematic, correlated one in the final data product. In the context of experimental nuclear physics, \citet{PEE87} noted that this scenario could lead to an estimate falling below the individual data points, a paradox known as Peelle's Pertinent Puzzle (PPP). It results from the usual and straightforward, but actually incorrect, way to propagate covariances \citep{DAG94,NEU12}.  A few workarounds have been proposed \citep[e.g.][]{BUR11,BEC12,NIS14} but they are not straightforward.
 
-The issue, however, not widely known in many other fields where the problem has seldom arisen.  In this paper, I present the paradox within the context of long-baseline interferometry (Sect.~\ref{sec:ppp}), derive the order of magnitude of its effect using the modelling of a single value (Sect.~\ref{sec:single}), analyse in detail its effect in least squares model-fitting (Sect.~\ref{sec:model}) and propose a simple, computer-efficient way to avoid it (Sect.~\ref{sec:conclusion}).  
+The issue, however, is not widely known in many other fields where the problem has seldom arisen.  In this paper, I present the paradox within the context of long-baseline interferometry (Sect.~\ref{sec:ppp}), derive the order of magnitude of its effect using the modelling of a single value (Sect.~\ref{sec:single}), analyse in detail its effect in least squares model-fitting (Sect.~\ref{sec:model}) and propose a simple, computer-efficient way to avoid it (Sect.~\ref{sec:conclusion}).  
 
 \section{Peelle's Pertinent Puzzle basics}
 \label{sec:ppp}
@@ -203,7 +145,7 @@ Let's consider a set of measurements of a single normalised quantity, like the v
 \begin{equation}
     \vdata = \vcot\hadam\vraw,
 \end{equation}
-where $\hadam$ denotes the Hadamard (element-wise) product of vectors. If $\datamean$, $\cotmean$, and $\rawmean$ the true, but unknown, values of these quantities, the error vector on $\vdata$  
+where $\hadam$ denotes the Hadamard (element-wise) product of vectors. With $\datamean$, $\cotmean$, and $\rawmean$ the true, but unknown, values of these quantities, the error vector on $\vdata$  
 \begin{align}
     \verror    &= \vdata - \datamean, \\
 \intertext{can be written as a sum of measurement and normalisation errors if one ignores a second-order term:}
@@ -344,8 +286,9 @@ The standard, but incorrect, covariance propagation in any ``normalisation'' set
 While solutions exist that are either numerically expensive or require some care to be implemented \citep{BUR11,BEC12,NIS14}, I have shown with a simple example that there is an easy and cheap way to solve the issue. First an uncorrelated fit is performed to estimate the true values corresponding to the data.  Secondly, these estimates are used to determine the covariance matrix by error propagation. At last, this covariance matrix is used to perform a least squares model fit.
 
 \section*{Acknowledgements}
-This work has made use of the Smithsonian/NASA Astrophysics Data System (ADS) and of the Centre de Données astronomiques de Strasbourg (CDS).
+This work has made use of the Smithsonian/NASA Astrophysics Data System (ADS).
 
+\bibliographystyle{pasa-mnras}
 \bibliography{article}
 
 \end{document}

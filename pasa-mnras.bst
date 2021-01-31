@@ -1,6 +1,7 @@
 %%+
 %%  Name:
-%%     mnras.bst
+%%     pasa-mnras.bst
+%%     Based on mnras.bst
 
 %%  Purpose:
 %%     BibTeX Bibliography style file for MNRAS
@@ -552,7 +553,7 @@ FUNCTION {format.eprint}
 FUNCTION {format.doi}
 { doi empty$
     { "" }
-    { ", \mn@doi{" * doi * "}" }
+    { ", \mndoi{" * doi * "}" }
     if$
 }
 
@@ -710,7 +711,7 @@ FUNCTION {format.journal.doi}
     }
     { journal "ArXiv e-prints" =
         { "preprint" }
-        { "\mn@doi [" journal * "] {" * doi * "}" * }
+        { "\mndoi [" journal * "] {" * doi * "}" * }
       if$
     }
   if$
@@ -1807,8 +1808,9 @@ FUNCTION {begin.bib}
   % but instead make mnras-insert.txt, and paste the results in here.
 "\relax" write$ newline$
 "\def\mn@urlcharsother{\let\do\@makeother \do\$\do\&\do\#\do\^\do\_\do\%\do\~}" write$ newline$
-"\def\mn@doi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mn@doi@} {\mn@doi@[]}}" write$ newline$
-"\def\mn@doi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href {http://dx.doi.org/#2} {doi:#2}\else \href {http://dx.doi.org/#2} {#1}\fi \endgroup}" write$ newline$
+"\definecolor{darkblue}{rgb}{0,0,0.597656}" write$ newline$
+"\def\mndoi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mndoi@} {\mndoi@[]}}" write$ newline$
+"\def\mndoi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href {http://dx.doi.org/#2} {\textcolor{darkblue}{doi:#2}}\else \href {http://dx.doi.org/#2} {\textcolor{darkblue}{#1}}\fi \endgroup}" write$ newline$
 "\def\mn@eprint#1#2{\mn@eprint@#1:#2::\@nil}" write$ newline$
 "\def\mn@eprint@arXiv#1{\href {http://arxiv.org/abs/#1} {{\tt arXiv:#1}}}" write$ newline$
 "\def\mn@eprint@dblp#1{\href {http://dblp.uni-trier.de/rec/bibtex/#1.xml} {dblp:#1}}" write$ newline$

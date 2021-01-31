@@ -2,11 +2,11 @@
 \makeatletter
 \relax
 \def\mn@urlcharsother{\let\do\@makeother \do\$\do\&\do\#\do\^\do\_\do\%\do\~}
-\def\mn@doi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mn@doi@}
-  {\mn@doi@[]}}
-\def\mn@doi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href
-  {http://dx.doi.org/#2} {doi:#2}\else \href {http://dx.doi.org/#2} {#1}\fi
-  \endgroup}
+\definecolor{darkblue}{rgb}{0,0,0.597656}
+\def\mndoi{\begingroup\mn@urlcharsother \@ifnextchar [ {\mndoi@} {\mndoi@[]}}
+\def\mndoi@[#1]#2{\def\@tempa{#1}\ifx\@tempa\@empty \href
+  {http://dx.doi.org/#2} {\textcolor{darkblue}{doi:#2}}\else \href
+  {http://dx.doi.org/#2} {\textcolor{darkblue}{#1}}\fi \endgroup}
 \def\mn@eprint#1#2{\mn@eprint@#1:#2::\@nil}
 \def\mn@eprint@arXiv#1{\href {http://arxiv.org/abs/#1} {{\tt arXiv:#1}}}
 \def\mn@eprint@dblp#1{\href {http://dblp.uni-trier.de/rec/bibtex/#1.xml}
@@ -18,17 +18,16 @@
   mn@eprint@\@tempb\endcsname \expandafter{\@tempc}}}
 
 \bibitem[\protect\citeauthoryear{{Absil} et~al.,}{{Absil} et~al.}{2006}]{ABS06}
-{Absil} O.,  et~al., 2006, \mn@doi [\aap] {10.1051/0004-6361:20054522}, 452,
-  237
+{Absil} O.,  et~al., 2006, \mndoi [\aap] {10.1051/0004-6361:20054522}, 452, 237
 
 \bibitem[\protect\citeauthoryear{{Becker} et~al.,}{{Becker}
   et~al.}{2012}]{BEC12}
-{Becker} B.,  et~al., 2012, \mn@doi [Journal of Instrumentation]
+{Becker} B.,  et~al., 2012, \mndoi [Journal of Instrumentation]
   {10.1088/1748-0221/7/11/P11002}, 7, P11002
 
 \bibitem[\protect\citeauthoryear{{Berger} et~al.,}{{Berger}
   et~al.}{2006}]{BER06}
-{Berger} D.~H.,  et~al., 2006, \mn@doi [\apj] {10.1086/503318}, 644, 475
+{Berger} D.~H.,  et~al., 2006, \mndoi [\apj] {10.1086/503318}, 644, 475
 
 \bibitem[\protect\citeauthoryear{{Burr}, {Kawano}, {Talou}, {Pan}  \&
   {Hengartner}}{{Burr} et~al.}{2011}]{BUR11}
@@ -55,20 +54,20 @@
   {Percheron}}{2006}]{MIDI}
 {Hummel} C.~A.,  {Percheron} I.,  2006, in Society of Photo-Optical
   Instrumentation Engineers (SPIE) Conference Series. p. 62683X,
-  \mn@doi{10.1117/12.671337}
+  \mndoi{10.1117/12.671337}
 
 \bibitem[\protect\citeauthoryear{{Kammerer}, {M{\'e}rand}, {Ireland}  \&
   {Lacour}}{{Kammerer} et~al.}{2020}]{KAM20}
-{Kammerer} J.,  {M{\'e}rand} A.,  {Ireland} M.~J.,   {Lacour} S.,  2020,
-  \mn@doi [\aap] {10.1051/0004-6361/202038563}, 644, A110
+{Kammerer} J.,  {M{\'e}rand} A.,  {Ireland} M.~J.,   {Lacour} S.,  2020, \mndoi
+  [\aap] {10.1051/0004-6361/202038563}, 644, A110
 
 \bibitem[\protect\citeauthoryear{{Lachaume}}{{Lachaume}}{2003}]{LAC03}
-{Lachaume} R.,  2003, \mn@doi [\aap] {10.1051/0004-6361:20030072}, 400, 795
+{Lachaume} R.,  2003, \mndoi [\aap] {10.1051/0004-6361:20030072}, 400, 795
 
 \bibitem[\protect\citeauthoryear{{Lachaume}, {Rabus}, {Jord{\'a}n}, {Brahm},
   {Boyajian}, {von Braun}  \& {Berger}}{{Lachaume} et~al.}{2019}]{LAC19}
 {Lachaume} R.,  {Rabus} M.,  {Jord{\'a}n} A.,  {Brahm} R.,  {Boyajian} T.,
-  {von Braun} K.,   {Berger} J.-P.,  2019, \mn@doi [\mnras]
+  {von Braun} K.,   {Berger} J.-P.,  2019, \mndoi [\mnras]
   {10.1093/mnras/stz114}, 484, 2656
 
 \bibitem[\protect\citeauthoryear{{Lawson}}{{Lawson}}{2000}]{LAW00}
@@ -76,17 +75,18 @@
 
 \bibitem[\protect\citeauthoryear{{Le Bouquin} et~al.,}{{Le Bouquin}
   et~al.}{2011}]{PIONIER}
-{Le Bouquin} J.-B.,  et~al., 2011, \mn@doi [\aap]
-  {10.1051/0004-6361/201117586}, 535, A67
+{Le Bouquin} J.-B.,  et~al., 2011, \mndoi [\aap] {10.1051/0004-6361/201117586},
+  535, A67
 
 \bibitem[\protect\citeauthoryear{{Millour}, {Valat}, {Petrov}  \&
   {Vannier}}{{Millour} et~al.}{2008}]{AMBER}
 {Millour} F.,  {Valat} B.,  {Petrov} R.~G.,   {Vannier} M.,  2008, in Optical
   and Infrared Interferometry. p. 701349 (\mn@eprint {arXiv} {0807.0291}),
-  \mn@doi{10.1117/12.788707}
+  \mndoi{10.1117/12.788707}
 
 \bibitem[\protect\citeauthoryear{{Monnier}}{{Monnier}}{2007}]{MON07}
-{Monnier} J.~D.,  2007, \mn@doi [\nar] {10.1016/j.newar.2007.06.006}, 51, 604
+{Monnier} J.~D.,  2007, \mndoi [{New Astronomy Reviews}]
+  {10.1016/j.newar.2007.06.006}, 51, 604
 
 \bibitem[\protect\citeauthoryear{{Neudecker}, {Fr{\"u}hwirth}  \&
   {Leeb}}{{Neudecker} et~al.}{2012}]{NEU12}
@@ -104,7 +104,7 @@
 \bibitem[\protect\citeauthoryear{{Pauls}, {Young}, {Cotton}  \&
   {Monnier}}{{Pauls} et~al.}{2005}]{OIFITS1}
 {Pauls} T.~A.,  {Young} J.~S.,  {Cotton} W.~D.,   {Monnier} J.~D.,  2005,
-  \mn@doi [\pasp] {10.1086/444523}, \href
+  \mndoi [\pasp] {10.1086/444523}, \href
   {http://adsabs.harvard.edu/abs/2005PASP..117.1255P} {117, 1255}
 
 \bibitem[\protect\citeauthoryear{{Peelle}}{{Peelle}}{1987}]{PEE87}
@@ -117,22 +117,22 @@ Oak Ridge National Laboratory
 \bibitem[\protect\citeauthoryear{{Perrin}, {Ridgway}, {Coud{\'e} du Foresto},
   {Mennesson}, {Traub}  \& {Lacasse}}{{Perrin} et~al.}{2004}]{PER04}
 {Perrin} G.,  {Ridgway} S.~T.,  {Coud{\'e} du Foresto} V.,  {Mennesson} B.,
-  {Traub} W.~A.,   {Lacasse} M.~G.,  2004, \mn@doi [\aap]
+  {Traub} W.~A.,   {Lacasse} M.~G.,  2004, \mndoi [\aap]
   {10.1051/0004-6361:20040052}, 418, 675
 
 \bibitem[\protect\citeauthoryear{{Tallon-Bosc} et~al.,}{{Tallon-Bosc}
   et~al.}{2008}]{TAL08}
 {Tallon-Bosc} I.,  et~al., 2008, in Optical and Infrared Interferometry. p.
-  70131J, \mn@doi{10.1117/12.788871}
+  70131J, \mndoi{10.1117/12.788871}
 
 \bibitem[\protect\citeauthoryear{{Tatulli} et~al.,}{{Tatulli}
   et~al.}{2007}]{TAT07}
-{Tatulli} E.,  et~al., 2007, \mn@doi [\aap] {10.1051/0004-6361:20064799}, 464,
+{Tatulli} E.,  et~al., 2007, \mndoi [\aap] {10.1051/0004-6361:20064799}, 464,
   29
 
 \bibitem[\protect\citeauthoryear{{Thi{\'e}baut}}{{Thi{\'e}baut}}{2008}]{THI08}
 {Thi{\'e}baut} E.,  2008, in Optical and Infrared Interferometry. p. 70131I,
-  \mn@doi{10.1117/12.788822}
+  \mndoi{10.1117/12.788822}
 
 \makeatother
 \end{thebibliography}
