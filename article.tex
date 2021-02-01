@@ -6,7 +6,7 @@
 
 \usepackage{subfigure}
 
-\title{Bias-free model fitting of correlated data in interferometry}
+\title[Bias-free model fitting of correlated data in interferometry]{Bias-free model fitting of correlated data in interferometry}
 \author[Lachaume]{R\'egis Lachaume$^{1,2}$\thanks{regis.lachaume@gmail.com}
 \affil{$^{1}$Instituto de Astronom\'\i{}a, Facultad de F\'\i{}sica, Pontificia Universidad Cat\'olica de Chile, casilla 306, Santiago 22, Chile}%
 \affil{$^{2}$Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}%
@@ -33,7 +33,8 @@ In optical and infrared long-baseline interferometry, data often display signifi
 
 \begin{keywords}
 techniques: interferometric --- 
-methods: statistical
+methods: statistical ---
+methods: data analysis
 \end{keywords}
 
 \end{frontmatter}
@@ -165,7 +166,7 @@ Let's assume $\vabserror$ and $\vrelerror$ are independent error terms of mean 0
             + \corr\reldev^2\datamean^2.
 \end{align}
 
-The value $\datamean$ is yet to be determined, so the covariances are often derived using the data in the propagation:
+The value $\datamean$ is yet to be determined, so the covariances are often derived using the measurements $\vdata$ in the propagation:
 \begin{equation}
     \ppp{\cov_{ij}} = \left[ 
                     \absdev^2 
@@ -228,11 +229,11 @@ Since $\expect{\error_i} = 0$ and $\expect{(\error_i-\error_j)^2} = 2\devmean^2$
               \reldev^2 \right]
 \end{equation}
 is biased.  If the data are not correlated ($\corr = 0$), the bias is small
-($\reldev^2$ to $2\reldev^2$) but it becomes large for correlated data if the number of points is large ($\sim n\reldev^2$ for fully correlated data) as \citet{DAG94} already noted. Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to 100). 
+($\reldev^2$ to $2\reldev^2$) but it becomes large for correlated data if the number of points is large ($\sim n\reldev^2$ for fully correlated data) as \citet{DAG94} already noted. Figure~\ref{fig:uncorr-peelle} shows a simulation of the bias as a function of the normalisation uncertainty $\reldev$ for various data sizes ($n = 2$ to 100). This analytical derivation confirms the numerical simulation by \citet[][see their Fig.~4]{NEU12}. 
 
 For spectro-interferometric observations with 4 telescopes, the number of correlated points can be over 1,000, so even with a low correlation coefficient, the impact can be large. For instance, a single GRAVITY observation in high spectral resolution yields $n = 6 \times 210$ visibility amplitudes. With an observed correlation of $\rho \approx 16$\% in the instrumental visibility amplitudes \citep{KAM20} and a typical $\reldev = 1$--2\% normalisation error, the bias on the calibrated visibilities could be 2--8\%.  
 
-\section{Model fitting}
+\section{General model fitting}
 \label{sec:model}
 
 \begin{figure}
