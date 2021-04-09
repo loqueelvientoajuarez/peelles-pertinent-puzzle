@@ -313,9 +313,9 @@ def fit_property_hist(model=quadratic, nsim=100, sigma_sys=0.03, sigma_sta=0.02,
 
 
 if __name__ == "__main__":
-    #single_fit_plot(save=True, show=True) # Fig 3a
-    #fit_property_hist(nsim=50_000, save=True) # Fig. 4a
-    #single_fit_plot(save=True, show=True, model=gauss) # Fig 3b
-    #fit_property_hist(nsim=50_000, save=True, model=gauss) # Fig 4b
-    single_fit_plot(save=True, show=True, model=bin) # Fig 3b
-    fit_property_hist(nsim=50_000, save=True, model=bin) # Fig 4b
+    # single_fit_plot(save=True, show=True) # Fig 3a
+    # fit_property_hist(nsim=50_000, save=True) # Fig. 4a
+    # single_fit_plot(save=True, show=True, model=gauss) # Fig 3b
+    # fit_property_hist(nsim=50_000, save=True, model=gauss) # Fig 4b
+    # single_fit_plot(save=True, show=True, model=bin) # Fig 3b
+    # fit_property_hist(nsim=50_000, save=True, model=bin) # Fig 4b
