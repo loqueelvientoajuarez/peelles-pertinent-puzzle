@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.6)  9 APR 2021 15:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.6)  27 APR 2021 13:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -420,7 +420,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip78
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 23.
+Package hyperref Info: Option `colorlinks' set `true' on input line 21.
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
@@ -430,35 +430,35 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./article.aux)
 \openout1 = `article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 28
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 27
 .
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 28.
+LaTeX Info: Redefining \microtypecontext on input line 27.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 28.
+LaTeX Info: Redefining \showhyphens on input line 27.
 Package microtype Info: Tracking enabled.
 Package microtype Info: Using tracking set `smallcaps'.
 Package microtype Info: No adjustment of interword spacing.
@@ -539,7 +539,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 28.
+Package hyperref Info: Link coloring ON on input line 27.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -552,44 +552,44 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count287
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 27.
+LaTeX Info: Redefining \pageref on input line 27.
+LaTeX Info: Redefining \nameref on input line 27.
 
 (./article.out) (./article.out)
 \@outlinefile=\write3
 \openout3 = `article.out'.
 
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
-3.
+2.
  (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
-3.
+2.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-43.
+42.
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-43.
+42.
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 43.
+(Font)              <10> on input line 42.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 43.
+(Font)              <7> on input line 42.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 43.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 43.
+(Font)              <5> on input line 42.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 42.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -598,7 +598,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 43.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 42.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -608,73 +608,63 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-3.
+2.
 
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Overfull \hbox (66.0pt too wide) in paragraph at lines 43--43
+Overfull \hbox (66.0pt too wide) in paragraph at lines 42--42
 [][] 
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 43.
+(Font)              <8> on input line 42.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 43.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+(Font)              <6> on input line 42.
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-<pdf/original-peelle.pdf, id=165, 286.1892pt x 149.59889pt>
+<pdf/original-peelle.pdf, id=156, 286.1892pt x 149.59889pt>
 File: pdf/original-peelle.pdf Graphic file (type pdf)
 <use pdf/original-peelle.pdf>
-Package pdftex.def Info: pdf/original-peelle.pdf  used on input line 73.
+Package pdftex.def Info: pdf/original-peelle.pdf  used on input line 72.
 (pdftex.def)             Requested size: 240.0pt x 125.45447pt.
-
-Underfull \hbox (badness 1314) in paragraph at lines 127--129
-\T1/lmr/m/n/10 (+20) falls out-side the data range. \T1/lmr/bx/n/10 The un-cer-
-tain-ties
- []
-
-[2 <./pdf/original-peelle.pdf>]
-<pdf/uncorrelated-peelle.pdf, id=235, 240.0pt x 150.0pt>
+<pdf/uncorrelated-peelle.pdf, id=159, 240.0pt x 150.0pt>
 File: pdf/uncorrelated-peelle.pdf Graphic file (type pdf)
 <use pdf/uncorrelated-peelle.pdf>
-Package pdftex.def Info: pdf/uncorrelated-peelle.pdf  used on input line 169.
+Package pdftex.def Info: pdf/uncorrelated-peelle.pdf  used on input line 168.
 (pdftex.def)             Requested size: 240.0pt x 150.00877pt.
- [3 <./pdf/uncorrelated-peelle.pdf>]
-<pdf/fit-example-quadratic.pdf, id=282, 239.93639pt x 149.59889pt>
+ [2 <./pdf/original-peelle.pdf>] [3 <./pdf/uncorrelated-peelle.pdf>]
+<pdf/fit-example-quadratic.pdf, id=273, 239.93639pt x 149.59889pt>
 File: pdf/fit-example-quadratic.pdf Graphic file (type pdf)
 <use pdf/fit-example-quadratic.pdf>
-Package pdftex.def Info: pdf/fit-example-quadratic.pdf  used on input line 295.
+Package pdftex.def Info: pdf/fit-example-quadratic.pdf  used on input line 294.
 
 (pdftex.def)             Requested size: 240.0pt x 149.64644pt.
-<pdf/fit-example-gauss.pdf, id=283, 239.93639pt x 149.59889pt>
+<pdf/fit-example-gauss.pdf, id=274, 239.93639pt x 149.59889pt>
 File: pdf/fit-example-gauss.pdf Graphic file (type pdf)
 <use pdf/fit-example-gauss.pdf>
-Package pdftex.def Info: pdf/fit-example-gauss.pdf  used on input line 296.
+Package pdftex.def Info: pdf/fit-example-gauss.pdf  used on input line 295.
 (pdftex.def)             Requested size: 240.0pt x 149.64644pt.
-<pdf/fit-quality-quadratic.pdf, id=284, 503.7219pt x 311.4837pt>
+<pdf/fit-quality-quadratic.pdf, id=275, 503.7219pt x 311.4837pt>
 File: pdf/fit-quality-quadratic.pdf Graphic file (type pdf)
 <use pdf/fit-quality-quadratic.pdf>
-Package pdftex.def Info: pdf/fit-quality-quadratic.pdf  used on input line 302.
+Package pdftex.def Info: pdf/fit-quality-quadratic.pdf  used on input line 301.
 
 (pdftex.def)             Requested size: 398.40152pt x 246.3546pt.
-<pdf/fit-quality-gauss.pdf, id=285, 503.7219pt x 311.4837pt>
+<pdf/fit-quality-gauss.pdf, id=276, 503.7219pt x 311.4837pt>
 File: pdf/fit-quality-gauss.pdf Graphic file (type pdf)
 <use pdf/fit-quality-gauss.pdf>
-Package pdftex.def Info: pdf/fit-quality-gauss.pdf  used on input line 303.
+Package pdftex.def Info: pdf/fit-quality-gauss.pdf  used on input line 302.
 (pdftex.def)             Requested size: 398.40152pt x 246.3546pt.
  [4]
-Underfull \hbox (badness 1210) in paragraph at lines 327--328
+Underfull \hbox (badness 1210) in paragraph at lines 326--327
 []\T1/lmr/m/n/10 (+20) Recursively fit-ting the data by up-dat-ing the
  []
 
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-30.
+29.
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -683,7 +673,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 10000) in paragraph at lines 330--330
+Underfull \hbox (badness 10000) in paragraph at lines 329--329
 [][][][][]$\T1/lmtt/m/n/8 https : / / github . com / loqueelvientoajuarez /
  []
 
@@ -695,24 +685,28 @@ tiple pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./pdf/fit-quality-gauss.pdf): PDF inclusion: mul
 tiple pdfs with page group included in a single page
->] [7] [8] (./article.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 532.
+>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+[8] (./article.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 531.
  [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 532.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 531.
  (./article.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 532.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 532.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 531.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 531.
 Package rerunfilecheck Info: File `article.out' has not changed.
 (rerunfilecheck)             Checksum: D19C82ED5D71153827EA78453EC1FA13;514.
  ) 
 Here is how much of TeX's memory you used:
- 12082 strings out of 483107
- 183686 string characters out of 5964631
- 510017 words of memory out of 5000000
- 26584 multiletter control sequences out of 15000+600000
- 634210 words of font info for 168 fonts, out of 8000000 for 9000
+ 12096 strings out of 483107
+ 183808 string characters out of 5964631
+ 508519 words of memory out of 5000000
+ 26580 multiletter control sequences out of 15000+600000
+ 629121 words of font info for 176 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 49i,17n,49p,1700b,444s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,17n,49p,1661b,458s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
 ips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share
 /texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
@@ -748,10 +742,10 @@ lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb></usr/share/texmf/
 fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.p
 fb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmtt8.pfb>
-Output written on article.pdf (9 pages, 1019096 bytes).
+Output written on article.pdf (9 pages, 1000294 bytes).
 PDF statistics:
- 677 PDF objects out of 1000 (max. 8388607)
- 608 compressed objects within 7 object streams
+ 666 PDF objects out of 1000 (max. 8388607)
+ 598 compressed objects within 6 object streams
  91 named destinations out of 1000 (max. 500000)
- 29287 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 28263 words of extra memory for PDF output out of 29859 (max. 10000000)
 
